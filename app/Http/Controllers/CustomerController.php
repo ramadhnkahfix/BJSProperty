@@ -21,39 +21,45 @@ class CustomerController extends Controller
         return view('pages/viewCustomer',$data); 
     }
 
-    public function simpan(Request $request)
-    {
+    // public function simpan(Request $request)
+    // {
        
-        DB::table('customer')->insert([
-            'nama' => $request->nama_pembeli,      
-            'alamat' => $request->alamat_pembeli,
-            'no_hp' => $request->no_hp_pembeli,
-            'nik' => $request->nik_pembeli, 
-            'id_status' => $request->id_status,       
-        ]);
+    //     DB::table('customer')->insert([
+    //         'nama' => $request->nama_pembeli,      
+    //         'alamat' => $request->alamat_pembeli,
+    //         'no_hp' => $request->no_hp_pembeli,
+    //         'nik' => $request->nik_pembeli, 
+    //         'id_status' => $request->id_status,       
+    //     ]);
 
-        return redirect('/dropdown');
-    }
+    //     return redirect('/dropdown');
+    // }
 
-    public function simpan2(Request $request)
-    {
+    // public function simpan2(Request $request)
+    // {
        
-        DB::table('customer')->insert([
-            'nama' => $request->nama,      
-            'alamat' => $request->alamat,  
-            'no_hp' => $request->no_hp_pembeli,
-            'nik' => $request->nik_pembeli, 
-            'id_status' => $request->id_status,        
-        ]);
+    //     DB::table('customer')->insert([
+    //         'nama' => $request->nama,      
+    //         'alamat' => $request->alamat,  
+    //         'no_hp' => $request->no_hp_pembeli,
+    //         'nik' => $request->nik_pembeli, 
+    //         'id_status' => $request->id_status,        
+    //     ]);
 
-        return redirect('/dropdown2');
-    }
+    //     return redirect('/dropdown2');
+    // }
 
-    public function editCust($id_pembeli) 
+    public function editCustomer($id_pembeli) 
     {
+        $customer = DB::table('customer')->where('id_pembeli', $id_pembeli)->get();
+        $data = array(
+            'menu' => 'customer',
+            'customer' => $customer,
+            'submenu' => ''
+        );
         
-        $data = Customer::where('id_pembeli',$id_pembeli)->first(); 
-        return view('pages/editCust',compact(['data'])); 
+        return view('pages/editCustomer',$data); 
     } 
+
 
 }

@@ -7,92 +7,83 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class PemesananController extends Controller
 {
+    //
     public function index()
     {
         $pemesanan = DB::table('pemesanan')->get();
         $data = array(
             'menu' => 'pemesanan',
+            'submenu' => 'pemesanan',
             'pemesanan' => $pemesanan,
-            'submenu' => ''
         );
 
-        return view('pemesanan/view_pemesanan',$data);
+        return view('pemesanan/pemesanan',$data); 
+    }
+
+    public function dropdownPemesanan(Request $post)
+    {
+        $pemesanan = DB::table('pemesanan')->join('barang', 'pemesanan.id_barang', '=', 'barang.id_barang')->where('id_pemesanan', $post->id_pemesanan)->get();
+        $data = array(
+            'menu' => 'barang',
+            'submenu' => 'pemesanan',
+            'pemesanan' => $pemesanan,
+        );
+
+        return view('/pemesanan/dropdown_pemesanan', $data);
     }
 
     public function insertPemesanan()
     {
+        $barang = DB::table('barang')->get();
+        $pemesanan = DB::table('pemesanan')->join('barang', 'pemesanan.id_barang', '=', 'barang.id_barang')->get();
         $pemesanan = DB::table('pemesanan')->get();
         $data = array(
             'menu' => 'barang',
+            'submenu' => 'view_pengadaan',
+            'barang' => $barang,
             'pemesanan' => $pemesanan,
-            'submenu' => ''
+            
         );
 
-        return view('pemesanan/form_pemesanan',$data);  
+        return view('pengadaan/form_pengadaan',$data);  
     }
 
-    
+    // public function insertPemesanan()
+    // {
+    //     $pemesanan = DB::table('pemesanan')->get();
+    //     $data = array(
+    //         'menu' => 'pemesanan',
+    //         'submenu' => 'pemesanan',
+    //         'pemesanan' => $pemesanan,
+    //     );
+
+    //     return view('pemesanan/addpemesanan',$data); 
+    // }
+
+
+
     public function tambahPemesanan(Request $post)
     {  
         DB::table('pemesanan')->insert([
-            'nama' => $post->nama,
-            'ttl' => $post->ttl,
-            'pekerjaan' => $post->pekerjaan,
-            'alamat' => $post->alamat,
-            'telp' => $post->telp,
-            'hp' => $post->hp,
-            'no_kavling' => $post->no_kavling,
-            'type' => $post->type,
-            'harga_standart' => $post->harga_standart,
-            'harga_kelebihan_tanah' => $post->harga_kelebihan_tanah,
-            'booking_fee' => $post->booking_fee,
-            'uang_muka' => $post->uang_muka,
-            'kpr' => $post->kpr,
-            'biaya_admin' => $post->biaya_admin,
+            'nama_barang' => $post->nama_barang,
+            'jml_barang' => $post->jml_barang,
+            'harga_barang' => $post->harga_barang,
         ]);
 
-        return redirect('pemesanan/view_pemesanan');
-    }
-
-    public function editPemesanan($id_pemesanan) 
-    {
-        $pemesanan = DB::table('pemesanan')->where('id_pemesanan', $id_pemesanan)->get();
-        $data = array(
-            'menu' => 'pemesanan',
-            'pemesanan' => $pemesanan,
-            'submenu' => ''
-        );
-        
-        return view('pemesanan/edit_pemesanan',$data);
-    }
-
-    public function updatePemesanan(Request $post)
-    {
-            DB::table('pemesanan')->where('id_pemesanan', $post->id_pemesanan)->update([
-                'nama' => $post->nama,
-                'ttl' => $post->ttl,
-                'pekerjaan' => $post->pekerjaan,
-                'alamat' => $post->alamat,
-                'telp' => $post->telp,
-                'hp' => $post->hp,
-                'no_kavling' => $post->no_kavling,
-                'type' => $post->type,
-                'harga_standart' => $post->harga_standart,
-                'harga_kelebihan_tanah' => $post->harga_kelebihan_tanah,
-                'booking_fee' => $post->booking_fee,
-                'uang_muka' => $post->uang_muka,
-                'kpr' => $post->kpr,
-                'biaya_admin' => $post->biaya_admin,
-            ]);
-        
-        return redirect('pemesanan/view_pemesanan');
+        return redirect('/pemesanan');
     }
 
     public function hapus($id_pemesanan)
     {
     	DB::table('pemesanan')->where('id_pemesanan',$id_pemesanan)->delete();
-	    return redirect('/pemesanan/view_pemesanan');
+	    return redirect('/pemesanan');
+    }
+
+    public function cetakForm(){
+        return view('pemesanan/cetak-pemesanan-form');
     }
 }
