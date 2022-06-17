@@ -51,7 +51,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                  @foreach($barang as $data)     
+                  @foreach($barang as $data)
                       <tr> 
                          <td>{{ $num++ }}</td>
                          <td>{{$data->nama_barang}}</td> 

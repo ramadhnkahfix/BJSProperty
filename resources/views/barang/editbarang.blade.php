@@ -1,9 +1,10 @@
-@extends('layout.template')
+@extends('layout.mainlayout')
 @section('title','edit barang')
 
 @section('content')
-<form action="/barang/updatebarang/{{ $barang->id_barang }}" method="POST" enctype="multipart/form-data">
-    @csrf
+<form action="{{route('edit.barang', $barang->id_barang)}}" method="POST">
+    @method('PATCH')
+@csrf
 
     <div class="content">
         <div class="row">
@@ -41,7 +42,7 @@
 
                 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-sm">Simpan</button>
+                    <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
             </div>
         </div>
     </div>

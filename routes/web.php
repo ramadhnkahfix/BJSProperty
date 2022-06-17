@@ -58,7 +58,7 @@ Route::get('/barang', [BarangController::class, 'index']);
 Route::get('/barang/addbarang', [BarangController::class, 'insertBarang']);
 Route::post('/barang/addbarang', [BarangController::class, 'tambahBarang']);
 Route::get('/barang/editbarang/{id_barang}', [BarangController::class, 'editBarang']);
-Route::post('/barang/updatebarang/{id_barang}', [BarangController::class, 'updateBarang']);
+Route::patch('/barang/updatebarang/{id}', [BarangController::class, 'updateBarang'])->name('edit.barang');
 Route::get('/barang/hapus/{id_barang}', [BarangController::class, 'hapus']);
 
 Route::get('/pegawai', [PegawaiController::class, 'index']);
