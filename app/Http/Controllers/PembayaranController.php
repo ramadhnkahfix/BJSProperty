@@ -33,7 +33,7 @@ class PembayaranController extends Controller
 
         return view('pembayaran/addpembayaran',$data); 
     }
-
+    
     public function tambahPembayaran(Request $post)
     {  
         Request()->validate([
