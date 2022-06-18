@@ -27,6 +27,9 @@
 			<i class="fas fa-times"></i></button>
 	  </div>
   </div>
+  <?php
+        $num = 1;
+      ?>
 
   <div class="card-body">
   <div class="card-body">
@@ -51,6 +54,7 @@
                   <tbody>
                   @foreach($pembayaran as $data)     
                       <tr> 
+                        <td>{{ $num++ }}</td>
                         <td>{{$data->tgl_pembayaran}}</td> 
                          <td>{{$data->total_pembayaran}}</td>
                          <td align="center">
@@ -67,6 +71,10 @@
                                   @endif
                             </td>
                          <td>
+
+                         <a href='/pembayaran/editpembayaran/{{ $data->id_pembayaran }}' class="btn btn-danger"> 
+                            <i class="fas fa-edit"></i> Edit</button>
+                            </a>
 
                           <button onclick="confirmDelete('{{ $data->id_pembayaran }}')" class="btn btn-danger">
                           <i class="fas fa-trash"></i> Hapus</button>
@@ -92,29 +100,6 @@
 </div>
 <!-- /.card -->
 
-
-<!-- penomoran-otomatis -->
-<script type="text/javascript">
-var addNumeration = function(cl){
-  var table = document.querySelector('table.' + cl)
-  var trs = table.querySelectorAll('tr')
-  var counter = 1
-  
-  Array.prototype.forEach.call(trs, function(x,i){
-    var firstChild = x.children[0]
-    if (firstChild.tagName === 'TD') {
-      var cell = document.createElement('td')
-      cell.textContent = counter ++
-      x.insertBefore(cell,firstChild)
-    } else {
-      firstChild.setAttribute('colspan',1)
-    }
-  })
-}
-
-addNumeration("table")
-</script>
-<!-- /.penomoran-otomatis -->
 
 
 <div class="modal fade" id="deletepembayaran" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

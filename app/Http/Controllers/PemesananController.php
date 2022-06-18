@@ -14,7 +14,7 @@ class PemesananController extends Controller
     //
     public function index()
     {
-        $pemesanan = DB::table('pemesanan')->get();
+        $pemesanan = DB::table('pemesanan','suplier')->get();
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
@@ -24,51 +24,23 @@ class PemesananController extends Controller
         return view('pemesanan/pemesanan',$data); 
     }
 
-    public function dropdownPemesanan(Request $post)
+    public function insertPemesanan()
     {
-        $pemesanan = DB::table('pemesanan')->join('barang', 'pemesanan.id_barang', '=', 'barang.id_barang')->where('id_pemesanan', $post->id_pemesanan)->get();
+        $pemesanan = DB::table('pemesanan')->get();
         $data = array(
-            'menu' => 'barang',
+            'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
             'pemesanan' => $pemesanan,
         );
 
-        return view('/pemesanan/dropdown_pemesanan', $data);
+        return view('pemesanan/addpemesanan',$data); 
     }
-
-    public function insertPemesanan()
-    {
-        $barang = DB::table('barang')->get();
-        $pemesanan = DB::table('pemesanan')->join('barang', 'pemesanan.id_barang', '=', 'barang.id_barang')->get();
-        $pemesanan = DB::table('pemesanan')->get();
-        $data = array(
-            'menu' => 'barang',
-            'submenu' => 'view_pengadaan',
-            'barang' => $barang,
-            'pemesanan' => $pemesanan,
-            
-        );
-
-        return view('pengadaan/form_pengadaan',$data);  
-    }
-
-    // public function insertPemesanan()
-    // {
-    //     $pemesanan = DB::table('pemesanan')->get();
-    //     $data = array(
-    //         'menu' => 'pemesanan',
-    //         'submenu' => 'pemesanan',
-    //         'pemesanan' => $pemesanan,
-    //     );
-
-    //     return view('pemesanan/addpemesanan',$data); 
-    // }
-
 
 
     public function tambahPemesanan(Request $post)
     {  
         DB::table('pemesanan')->insert([
+            'tgl_pemesanan' => $post->tgl_pemesanan,
             'nama_barang' => $post->nama_barang,
             'jml_barang' => $post->jml_barang,
             'harga_barang' => $post->harga_barang,

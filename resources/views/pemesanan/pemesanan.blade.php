@@ -55,6 +55,7 @@
                       <!-- <th><input name="select_all" value="" id="example-select-all" type="checkbox" /></th> -->
                       <th style="width: 10px">No</th>
                       <th>Tgl Pemesanan </th>
+                      <th>Suplier</th>
                       <th>Nama Barang </th>
                       <th>Jumlah Barang</th>
                       <th>Harga Barang </th>
@@ -67,6 +68,7 @@
                       <tr> 
                          <td>{{ $num++ }}</td>
                          <td>{{$data->tgl_pemesanan}}</td> 
+                         <td>{{$data->suplier->suplier}}</td> 
                          <td>{{$data->nama_barang}}</td> 
                          <td>{{$data->jml_barang}}</td>
                          <td>{{$data->harga_barang}}</td>

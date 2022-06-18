@@ -51,7 +51,7 @@ class SuplierController extends Controller
 
     public function editSuplier($id_suplier)
     {
-        $suplier = DB::table('suplier')->get();
+        $suplier = DB::table('suplier')->where('id_suplier','=',$id_suplier)->first();
         $data = array(
             'menu' => 'suplier',
             'submenu' => 'suplier',
@@ -60,14 +60,15 @@ class SuplierController extends Controller
         return view('suplier/editsuplier', $data);
     }
 
-    public function updateSuplier($id_suplier)
+    public function updateSuplier(Request $request,$id)
     {  
-        DB::table('suplier')->insert([
-            'nama_suplier' => $post->nama_suplier,
-            'jk_suplier' => $post->jk_suplier,
-            'no_telp' => $post->no_telp,
-            'alamat_suplier' => $post->alamat_suplier,
-            'status_suplier' => $post->status_suplier,
+        $update = DB::table('suplier')->where('id_suplier','=',$id)->limit(1);
+        $update->update([
+            'nama_suplier' => $request->nama_suplier,
+            'jk_suplier' => $request->jk_suplier,
+            'no_telp' => $request->no_telp,
+            'alamat_suplier' => $request->alamat_suplier,
+            'status_suplier' => $request->status_suplier,
         ]);
 
         return redirect('/suplier');

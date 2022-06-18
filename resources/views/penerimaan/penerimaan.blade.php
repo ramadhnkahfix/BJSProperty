@@ -27,6 +27,9 @@
 			<i class="fas fa-times"></i></button>
 	  </div>
   </div>
+  <?php
+        $num = 1;
+      ?>
 
   <div class="card-body">
   <div class="card-body">
@@ -50,13 +53,18 @@
                   <tbody>
                   @foreach($penerimaan as $data)     
                       <tr>
+                        <td>{{ $num++ }}</td>
                          <td>{{$data->tgl_penerimaan}}</td> 
                          <td align="center">
                           <a href="{{ url('bukti/'.$data->bukti) }}"><button class="
                           btn btn-success" type="button">Download</button></a>
                         </td>
                          <td>{{$data->catatan}}</td>
+                         
                          <td>
+                          <a href='/penerimaan/editpenerimaan/{{ $data->id_penerimaan }}' class="btn btn-danger"> 
+                            <i class="fas fa-edit"></i> Edit</button>
+                            </a>
                           <button onclick="confirmDelete('{{ $data->id_penerimaan }}')" class="btn btn-danger">
                           <i class="fas fa-trash"></i> Hapus</button>
                           </td>
@@ -80,30 +88,6 @@
   <!-- /.card-footer-->
 </div>
 <!-- /.card -->
-
-
-<!-- penomoran-otomatis -->
-<script type="text/javascript">
-var addNumeration = function(cl){
-  var table = document.querySelector('table.' + cl)
-  var trs = table.querySelectorAll('tr')
-  var counter = 1
-  
-  Array.prototype.forEach.call(trs, function(x,i){
-    var firstChild = x.children[0]
-    if (firstChild.tagName === 'TD') {
-      var cell = document.createElement('td')
-      cell.textContent = counter ++
-      x.insertBefore(cell,firstChild)
-    } else {
-      firstChild.setAttribute('colspan',1)
-    }
-  })
-}
-
-addNumeration("table")
-</script>
-<!-- /.penomoran-otomatis -->
 
 
 <div class="modal fade" id="deletepenerimaan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

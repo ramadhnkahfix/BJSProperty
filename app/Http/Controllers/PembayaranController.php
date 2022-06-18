@@ -65,6 +65,37 @@ class PembayaranController extends Controller
         return redirect('/pembayaran');
     }
 
+    public function editPembayaran($id_pembayaran)
+    {
+        $pembayaran = DB::table('pembayaran')->where('id_pembayaran','=',$id_pembayaran)->first();
+        $data = array(
+            'menu' => 'pembayaran',
+            'submenu' => 'pembayaran',
+            'pembayaran' => $pembayaran,
+        );
+        return view('pembayaran/editpembayaran', $data);
+    }
+
+    public function updatePembayaran(Request $request,$id)
+    {  
+        $update = DB::table('pembayaran')->where('id_pembayaran','=',$id)->limit(1);
+        $update->update([
+            'tgl_pembayaran' => $request->tgl_pembayaran,
+            'total_pembayaran' => $request->total_pembayaran,
+            'status_pembayaran' => $request->status_pembayaran,
+        ]);
+
+        // upload gambar/foto bukti_pembayaran
+        $file = Request()->bukti_pembayaran;
+        if(!($file == null)) {
+            $fileName = Request()->id_pembayaran.'.' . $file->extension();
+            $file->move(public_path('bukti_pembayaran'), $fileName);
+            $data["bukti_pembayaran"] = $fileName;
+        }
+        
+        return redirect('/pembayaran')->with('status','Data Berhasil di Ubah');
+    }
+
     public function hapus($id_pembayaran)
     {
     	DB::table('pembayaran')->where('id_pembayaran',$id_pembayaran)->delete();

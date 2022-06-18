@@ -28,9 +28,9 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
                 @if($submenu == 'pemesanan')
-                  <a href="/pemesanan" class="nav-link active">
+                  <a href="{{url('/pemesanan')}}" class="nav-link active">
                 @else
-                  <a href="/pemesanan" class="nav-link">
+                  <a href="{{url('/pemesanan')}}" class="nav-link">
                 @endif
                 <i class="fas fa-archive nav-icon"></i>
                   <p>Data Pemesanan</p>
@@ -39,9 +39,9 @@
 
               <li class="nav-item">
                 @if($submenu == 'penerimaan')
-                  <a href="/penerimaan" class="nav-link active">
+                  <a href="{{url('/penerimaan')}}" class="nav-link active">
                 @else
-                  <a href="/penerimaan" class="nav-link">
+                  <a href="{{url('/penerimaan')}}" class="nav-link">
                 @endif
                 <i class="fas fa-archive nav-icon"></i>
                   <p>Data Penerimaan</p>
@@ -50,9 +50,9 @@
 
           <li class="nav-item">
                 @if($submenu == 'pembayaran')
-                  <a href="/pembayaran" class="nav-link active">
+                  <a href="{{url('/pembayaran')}}" class="nav-link active">
                 @else
-                  <a href="/pembayaran" class="nav-link">
+                  <a href="{{url('/pembayaran')}}" class="nav-link">
                 @endif
                 <i class="fas fa-archive nav-icon"></i>
                   <p>Data Pembayaran</p>
@@ -76,9 +76,9 @@
 
               <li class="nav-item">
                 @if($submenu == 'barang') 
-                  <a href="/barang" class="nav-link active">
+                  <a href="{{url('/barang')}}" class="nav-link active">
                 @else
-                  <a href="/barang" class="nav-link">
+                  <a href="{{url('/barang')}}" class="nav-link">
                 @endif
                 <i class="fas fa-cart-arrow-down nav-icon"></i>
                   <p>Barang</p>
@@ -86,9 +86,9 @@
               </li>
               <li class="nav-item">
                 @if($submenu == 'pegawai') 
-                  <a href="/pegawai" class="nav-link active">
+                  <a href="{{url('/pegawai')}}" class="nav-link active">
                 @else
-                  <a href="/pegawai" class="nav-link">
+                  <a href="{{url('/pegawai')}}" class="nav-link">
                 @endif
                 <i class="fas fa-cart-arrow-down nav-icon"></i>
                   <p>Pegawai</p>
@@ -96,9 +96,9 @@
               </li>
               <li class="nav-item">
                 @if($submenu == 'suplier') 
-                  <a href="/suplier" class="nav-link active">
+                  <a href="{{url('/suplier')}}" class="nav-link active">
                 @else
-                  <a href="/suplier" class="nav-link">
+                  <a href="{{url('/suplier')}}" class="nav-link">
                 @endif
                 <i class="fas fa-cart-arrow-down nav-icon"></i>
                   <p>Suplier</p>
@@ -109,9 +109,9 @@
 
           <li class="nav-item">
                 @if($submenu == 'pemesanan')
-                  <a href="/pemesanan/cetak-pemesanan-form" class="nav-link active">
+                  <a href="{{url('/pemesanan/cetak-pemesanan-form')}}" class="nav-link active">
                 @else
-                  <a href="/pemesanan/cetak-pemesanan-form" class="nav-link">
+                  <a href="{{url('/pemesanan/cetak-pemesanan-form')}}" class="nav-link">
                 @endif
                 <i class="fas fa-archive nav-icon"></i>
                   <p>Data Pemesanan</p>

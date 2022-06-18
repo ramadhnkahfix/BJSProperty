@@ -1,23 +1,14 @@
-@extends('layout.template')
+@extends('layout.mainlayout')
 @section('title','edit pegawai')
 
 @section('content')
-<form action="/pegawai/updatepegawai/{{ $pegawai->id_pegawai }}" method="POST" enctype="multipart/form-data">
+<form action="{{route('edit.pegawai', $pegawai->id_pegawai)}}" method="POST">
+    @method('POST')
     @csrf
 
     <div class="content">
         <div class="row">
             <div class="col-sm-6">
-
-            <div class="form-group">
-                    <label>ID Pegawai</label>
-                    <input name="id_pegawai" class="form-control" value="{{$pegawai->id_pegawai}}"readonly>
-                    <div class="text-danger">
-                        @error('id_pegawai')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label>Nama Pegawai</label>
@@ -30,14 +21,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label>JK pegawai</label>
-                    <input name="jk_pegawai" class="form-control" value="{{$pegawai->jk_pegawai}}">
-                    <div class="text-danger">
-                        @error('jk_pegawai')
-                            {{ $message }}
-                        @enderror
+                    <label >Jenis Kelamin </label>
+                    @error('jk_pegawai')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    </label>
+                    <div class="col-sm-14">
+                      <select name="jk_pegawai" class="form-control">
+                        <option value="{{$pegawai->jk_pegawai}}">-Pilih-</option>
+                        <option @if(old('jk_pegawai')=='0') selected @endif value="0">Laki-Laki</option>
+                        <option @if(old('jk_pegawai')=='1') selected @endif value="1">Perempuan</option>
+                      </select>
                     </div>
-                </div>
+                  </div>
 
                 <div class="form-group">
                     <label>No. Telp</label>
@@ -60,14 +56,20 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Status Pegawai</label>
-                    <input name="status_pegawai" class="form-control" value="{{$pegawai->status_pegawai}}">
-                    <div class="text-danger">
-                        @error('status_pegawai')
-                            {{ $message }}
-                        @enderror
+                    <label>Status Pegawai </label>
+                    @error('status_pegawai')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    </label>
+                    <div class="col-sm-14">
+                      <select name="status_pegawai" class="form-control">
+                        <option value="{{$pegawai->status_pegawai}}">-Pilih-</option>
+                        <option @if(old('status_pegawai')=='0') selected @endif value="0">Aktif</option>
+                        <option @if(old('status_pegawai')=='1') selected @endif value="1">Nonaktif</option>
+                      </select>
                     </div>
-                </div>
+                  </div>
+
 
                 
                 <div class="form-group">

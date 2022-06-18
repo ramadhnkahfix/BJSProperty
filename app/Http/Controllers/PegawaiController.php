@@ -51,7 +51,7 @@ class PegawaiController extends Controller
 
     public function editPegawai($id_pegawai)
     {
-        $pegawai = DB::table('pegawai')->get();
+        $pegawai = DB::table('pegawai')->where('id_pegawai','=',$id_pegawai)->first();
         $data = array(
             'menu' => 'pegawai',
             'submenu' => 'pegawai',
@@ -60,15 +60,15 @@ class PegawaiController extends Controller
         return view('pegawai/editpegawai', $data);
     }
 
-    public function updatePegawai($id_pegawai)
+    public function updatePegawai(Request $request,$id)
     {  
-        DB::table('pegawai')->insert([
-            'id_pegawai' => $post->id_pegawai,
-            'nama_pegawai' => $post->nama_pegawai,
-            'jk_pegawai' => $post->jk_pegawai,
-            'no_telp' => $post->no_telp,
-            'alamat_pegawai' => $post->alamat_pegawai,
-            'status_pegawai' => $post->status_pegawai,
+        $update = DB::table('pegawai')->where('id_pegawai','=',$id)->limit(1);
+        $update->update([
+            'nama_pegawai' => $request->nama_pegawai,
+            'jk_pegawai' => $request->jk_pegawai,
+            'no_telp' => $request->no_telp,
+            'alamat_pegawai' => $request->alamat_pegawai,
+            'status_pegawai' => $request->status_pegawai,
         ]);
 
         return redirect('/pegawai');

@@ -28,18 +28,68 @@
         </div>
     </div>
     <div class="card-body">
-      <!-- <h1>Tambah Data Rencana Pengadaaan</h1> -->
-      <form action="/pemesanan/dropdownPemesanan" method="post" enctype="multipart/form-data">
-        <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
-            Data Barang : 
-            <select class="form-control" name="id_pemesanan">
-            @foreach ($pemesanan as $data)
-            <option value="{{ $data->id_pemesanan}}">{{ $data->nama_barang}}</option>
-            @endforeach
-            </select><br>        
-            <button type="submit" class="btn btn-primary">Simpan</button>
+    <!-- <h1>Tambah Data Temuan</h1> -->
+    <form action="/pemesanan/addpemesanan" method="POST" enctype="multipart/form-data">
+    @csrf
+
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-6">
+
+                <div class="form-group">
+                    <label>Tanggal Pemesanan</label>
+                    <input type="date" name="tgl_pemesanan" class="form-control" value="{{old('tgl_pemesanan') }}">
+                    <div class="text-danger">
+                        @error('tgl_pemesanan')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label>Catatan</label>
+                    <input name="catatan" class="form-control" value="{{old('catatan') }}">
+                    <div class="text-danger">
+                        @error('catatan')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label>Nama Barang</label>
+                    <input name="nama_barang" class="form-control" value="{{old('nama_barang') }}">
+                    <div class="text-danger">
+                        @error('nama_barang')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>jml_barang</label>
+                    <input name="jml_barang" class="form-control" value="{{old('jml_barang') }}">
+                    <div class="text-danger">
+                        @error('jml_barang')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>harga_barang</label>
+                    <input name="harga_barang" class="form-control" value="{{old('harga_barang') }}">
+                    <div class="text-danger">
+                        @error('harga_barang')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+
+
+        <button type="submit" class="btn btn-primary">Simpan</button>
+
       </form>
-      <div class="card-footer">
 
     </div>
     <!-- /.card-body -->
