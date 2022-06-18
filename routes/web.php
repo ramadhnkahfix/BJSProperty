@@ -44,6 +44,7 @@ Route::post('/penerimaan/addpenerimaan', [PenerimaanController::class, 'tambahPe
 Route::get('/penerimaan/editpenerimaan/{id_penerimaan}', [PenerimaanController::class, 'editPenerimaan']);
 Route::post('/penerimaan/updatepenerimaan/{id}', [PenerimaanController::class, 'updatePenerimaan'])->name('edit.penerimaan');
 Route::get('/penerimaan/hapus/{id_penerimaan}', [PenerimaanController::class, 'hapus']);
+Route::get('/download/bukti/{file}', [PenerimaanController::class, 'download']);
 
 Route::get('/pembayaran', [PembayaranController::class, 'index']);
 Route::get('/pembayaran/addpembayaran', [PembayaranController::class, 'insertPembayaran']);

@@ -56,7 +56,7 @@
                         <td>{{ $num++ }}</td>
                          <td>{{$data->tgl_penerimaan}}</td> 
                          <td align="center">
-                          <a href="{{ url('bukti/'.$data->bukti) }}"><button class="
+                          <a href="{{ url('download/bukti/'.$data->id_penerimaan) }}"><button class="
                           btn btn-success" type="button">Download</button></a>
                         </td>
                          <td>{{$data->catatan}}</td>

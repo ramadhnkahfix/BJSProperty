@@ -48,7 +48,7 @@
 
                 <div class="form-group">
                     <label>Bukti Penerimaan</label>
-                    <input type="file" name="bukti" class="form-control" value="{{old('bukti') }}">
+                    <input type="file" name="bukti" class="form-control" id="customFile" accept="image/jpg, image/png, image/jpeg, .pdf" value="{{old('bukti') }}">
                     <div class="text-danger">
                         @error('bukti')
                             {{ $message }}

@@ -2,8 +2,7 @@
 @section('title','edit penerimaan')
 
 @section('content')
-<form action="{{route('edit.penerimaan', $penerimaan->id_penerimaan)}}" method="POST">
-
+<form action="{{route('edit.penerimaan', $penerimaan->id_penerimaan)}}" method="POST" enctype="multipart/form-data">
 @csrf
 
     <div class="content">
@@ -22,7 +21,7 @@
 
                 <div class="form-group">
                     <label>Bukti Penerimaan</label>
-                    <input type="file" name="bukti" class="form-control" value="{{$penerimaan->bukti}}">
+                    <input type="file" name="bukti" class="form-control" accept="image/jpg, image/png, image/jpeg, .pdf" value="{{$penerimaan->bukti}}">
                     <div class="text-danger">
                         @error('bukti')
                             {{ $message }}

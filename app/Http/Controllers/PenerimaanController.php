@@ -40,9 +40,9 @@ class PenerimaanController extends Controller
     {  
         //upload gambar/bukti
         $file = Request()->bukti;
-        $fileName = Request()->id_penerimaan.'.' . $file->extension();
+        $fileName = $file->getClientOriginalName();
         $file->move(public_path('bukti'), $fileName);
-
+        
         DB::table('penerimaan')->insert([
             'tgl_penerimaan' => $post->tgl_penerimaan,
             'bukti' => $fileName ,
@@ -73,11 +73,11 @@ class PenerimaanController extends Controller
         ]);
 
         // upload gambar/foto bukti_penerimaan
-        $file = Request()->bukti_penerimaan;
+        $file = $request->bukti;
         if(!($file == null)) {
-            $fileName = Request()->id_penerimaan.'.' . $file->extension();
-            $file->move(public_path('bukti_penerimaan'), $fileName);
-            $data["bukti_penerimaan"] = $fileName;
+            $fileName = $file;
+            $file->move(public_path('bukti'), $fileName);
+            $data["bukti"] = $fileName;
         }
         
         return redirect('/penerimaan')->with('status','Data Berhasil di Ubah');
@@ -88,4 +88,13 @@ class PenerimaanController extends Controller
     	DB::table('penerimaan')->where('id_penerimaan',$id_penerimaan)->delete();
 	    return redirect('/penerimaan');
     }
+
+    public function download($file){
+        $data = DB::table('penerimaan')->where('id_penerimaan','=',$file)->first();
+        $bukti = public_path('bukti/'.$data->bukti);
+        // dd($data);
+
+        return response()->download($bukti, $data->bukti);
+    }
+
 }
