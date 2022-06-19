@@ -8,6 +8,7 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SuplierController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DropdownController;
 
 
@@ -30,6 +31,15 @@ Route::get('/', function () {
 
     return view('dashboard',$data);
 });
+
+// Authentication
+Route::get('/login',[LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'postLogin'])->name('postlogin');
+Route::get('/logout',[LoginController::class, 'logout']);
+
+// Registration
+Route::get('/registration',[LoginController::class, 'registrationIndex']);
+Route::post('/registration',[LoginController::class, 'registration'])->name('postregist');
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
