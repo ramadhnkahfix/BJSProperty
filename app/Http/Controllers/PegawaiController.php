@@ -38,6 +38,15 @@ class PegawaiController extends Controller
 
     public function tambahPegawai(Request $post)
     {  
+        $user = new \app\user;
+        $user->role = 'pegawai';
+        $user->name = $request->nama_pegawai;
+        $user->email = $request->email;
+        $user->password = bcrypt('rahasia');
+        $user->remember_token = str_random(60);
+        $user->save();
+
+        $request->request->add(['id_user' => $user->id ]);
         DB::table('pegawai')->insert([
             'nama_pegawai' => $post->nama_pegawai,
             'jk_pegawai' => $post->jk_pegawai,

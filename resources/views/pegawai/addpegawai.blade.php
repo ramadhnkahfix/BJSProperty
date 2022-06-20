@@ -82,6 +82,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Email Pegawai</label>
+                    <input name="email" type="email" class="form-control" value="{{old('email') }}">
+                    <div class="text-danger">
+                        @error('email')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>Status Pegawai </label>
                     @error('status_pegawai')
                         <div class="text-danger">{{ $message }}</div>
