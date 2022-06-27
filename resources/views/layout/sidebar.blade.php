@@ -10,19 +10,6 @@
       </div>
 
     
-   
-      <!-- SidebarSearch Form -->
-      <!-- <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div> -->
-
       
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -60,7 +47,7 @@
               </li>
 
 
-              <li class="nav-item has-treeview menu-open">
+          <li class="nav-item has-treeview menu-open">
             @if($menu == 'barang')
               <a href="#" class="nav-link active">
             @else
@@ -107,19 +94,8 @@
             </ul>
           </li>
 
-          <li class="nav-item">
-                @if($submenu == 'pemesanan')
-                  <a href="{{url('/pemesanan/cetak-pemesanan-form')}}" class="nav-link active">
-                @else
-                  <a href="{{url('/pemesanan/cetak-pemesanan-form')}}" class="nav-link">
-                @endif
-                <i class="fas fa-archive nav-icon"></i>
-                  <p>Data Pemesanan</p>
-                </a>
-              </li>
 
-
-          <!-- <li class="nav-item has-treeview menu-open">
+              <li class="nav-item has-treeview menu-open">
             @if($menu == 'pemesanan')
               <a href="#" class="nav-link active">
             @else
@@ -134,37 +110,37 @@
             <ul class="nav nav-treeview">
 
               <li class="nav-item">
-                @if($submenu == 'cetak-pegawai-form') 
-                  <a href="/cetak-pegawai-form" class="nav-link active">
+                @if($submenu == 'pemesanan') 
+                  <a href="{{url('/pemesanan/cetak-pemesanan-form')}}" class="nav-link active">
                 @else
-                  <a href="/cetak-pegawai-form" class="nav-link">
+                  <a href="{{url('/pemesanan/cetak-pemesanan-form')}}" class="nav-link">
                 @endif
                 <i class="fas fa-cart-arrow-down nav-icon"></i>
-                  <p>Laporan Pemesanan</p>
+                  <p>Pemesanan</p>
                 </a>
               </li>
               <li class="nav-item">
-                @if($submenu == 'laporan_penerimaan') 
-                  <a href="/laporan_penerimaan" class="nav-link active">
+                @if($submenu == 'penerimaan') 
+                  <a href="{{url('/penerimaan/cetak-penerimaan-form')}}" class="nav-link active">
                 @else
-                  <a href="/laporan_penerimaan" class="nav-link">
+                  <a href="{{url('/penerimaan/cetak-penerimaan-form')}}" class="nav-link">
                 @endif
                 <i class="fas fa-cart-arrow-down nav-icon"></i>
-                  <p>Laporan Penerimaan</p>
+                  <p>Penerimaan</p>
                 </a>
               </li>
               <li class="nav-item">
-                @if($submenu == 'laporan_pembayaran') 
-                  <a href="/laporan_pembayaran" class="nav-link active">
+                @if($submenu == 'pembayaran') 
+                  <a href="{{url('/pembayaran/cetak-pembayaran-form')}}" class="nav-link active">
                 @else
-                  <a href="/laporan_pembayaran" class="nav-link">
+                  <a href="{{url('/pembayaran/cetak-pembayaran-form')}}" class="nav-link">
                 @endif
                 <i class="fas fa-cart-arrow-down nav-icon"></i>
-                  <p>Laporan Pembayaran</p>
+                  <p>Pembayaran</p>
                 </a>
               </li>
             </ul>
-          </li> -->
+          </li>
         </ul>
       </li>   
     </div>
