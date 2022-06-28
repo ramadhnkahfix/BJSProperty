@@ -58,6 +58,12 @@ class PemesananController extends Controller
     }
 
     public function cetakForm(){
-        return view('pemesanan/cetak-pemesanan-form');
+        $pemesanan = DB::table('pemesanan')->get();
+        $data = array(
+            'menu' => 'pemesanan',
+            'submenu' => 'pemesanan',
+            'pemesanan' => $pemesanan,
+        );
+        return view('pemesanan/cetak-pemesanan-form', $data);
     }
 }

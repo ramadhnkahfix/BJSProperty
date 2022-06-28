@@ -97,4 +97,20 @@ class PenerimaanController extends Controller
         return response()->download($bukti, $data->bukti);
     }
 
+    public function cetakForm(){
+        $penerimaan = DB::table('penerimaan')->get();
+        $data = array(
+            'menu' => 'penerimaan',
+            'submenu' => 'penerimaan',
+            'penerimaan' => $penerimaan,
+        );
+        return view('penerimaan/cetak-penerimaan-form', $data);
+    }
+
+    public function cetakPenerimaanPertanggal($tglawal, $tglakhir){
+        // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
+        $cetakpertanggal = DB::table('penerimaan')->whereBetween('tgl_penerimaan',[$tglawal, $tglakhir])->get();
+        return view('penerimaan/cetak-penerimaan-pertanggal', compact('cetakpertanggal'));
+    }
+
 }

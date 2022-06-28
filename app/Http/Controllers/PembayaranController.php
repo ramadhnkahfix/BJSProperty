@@ -101,4 +101,20 @@ class PembayaranController extends Controller
     	DB::table('pembayaran')->where('id_pembayaran',$id_pembayaran)->delete();
 	    return redirect('/pembayaran');
     }
+
+    public function cetakForm(){
+        $pembayaran = DB::table('pembayaran')->get();
+        $data = array(
+            'menu' => 'pembayaran',
+            'submenu' => 'pembayaran',
+            'pembayaran' => $pembayaran,
+        );
+        return view('pembayaran/cetak-pembayaran-form', $data);
+    }
+
+    public function cetakPembayaranPertanggal($tglawal, $tglakhir){
+        // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
+        $cetakpertanggal = DB::table('pembayaran')->whereBetween('tgl_pembayaran',[$tglawal, $tglakhir])->get();
+        return view('pembayaran/cetak-pembayaran-pertanggal', compact('cetakpertanggal'));
+    }
 }

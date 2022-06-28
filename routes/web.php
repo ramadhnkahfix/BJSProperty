@@ -47,6 +47,7 @@ Route::get('/pemesanan', [PemesananController::class, 'index']);
 Route::get('/pemesanan/addpemesanan', [PemesananController::class, 'insertPemesanan']);
 Route::post('/pemesanan/addpemesanan', [PemesananController::class, 'tambahPemesanan']);
 Route::get('/pemesanan/hapus/{id_pemesanan}', [PemesananController::class, 'hapus']);
+Route::get('/pemesanan/cetak-pemesanan-form', [PemesananController::class, 'cetakForm']);
 
 Route::get('/penerimaan', [PenerimaanController::class, 'index']);
 Route::get('/penerimaan/addpenerimaan', [PenerimaanController::class, 'insertPenerimaan']);
@@ -55,6 +56,8 @@ Route::get('/penerimaan/editpenerimaan/{id_penerimaan}', [PenerimaanController::
 Route::post('/penerimaan/updatepenerimaan/{id}', [PenerimaanController::class, 'updatePenerimaan'])->name('edit.penerimaan');
 Route::get('/penerimaan/hapus/{id_penerimaan}', [PenerimaanController::class, 'hapus']);
 Route::get('/download/bukti/{file}', [PenerimaanController::class, 'download']);
+Route::get('/penerimaan/cetak-penerimaan-form', [PenerimaanController::class, 'cetakForm']);
+Route::get('/penerimaan/cetakPenerimaanPertanggal/{tglawal}/{tglakhir}', [PenerimaanController::class, 'cetakPenerimaanPertanggal']);
 
 Route::get('/pembayaran', [PembayaranController::class, 'index']);
 Route::get('/pembayaran/addpembayaran', [PembayaranController::class, 'insertPembayaran']);
@@ -62,6 +65,9 @@ Route::post('/pembayaran/addpembayaran', [PembayaranController::class, 'tambahPe
 Route::get('/pembayaran/editpembayaran/{id_pembayaran}', [PembayaranController::class, 'editPembayaran']);
 Route::post('/pembayaran/updatepembayaran/{id}', [PembayaranController::class, 'updatePembayaran'])->name('edit.pembayaran');
 Route::get('/pembayaran/hapus/{id_pembayaran}', [PembayaranController::class, 'hapus']);
+Route::get('/pembayaran/cetak-pembayaran-form', [PembayaranController::class, 'cetakForm']);
+Route::get('/pembayaran/cetakPembayaranPertanggal/{tglawal}/{tglakhir}', [PembayaranController::class, 'cetakPembayaranPertanggal']);
+
 
 Route::get('/barang', [BarangController::class, 'index']);
 Route::get('/barang/addbarang', [BarangController::class, 'insertBarang']);
