@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -16,6 +17,7 @@ class PegawaiController extends Controller
     public function index()
     {
         $pegawai = DB::table('pegawai')->get();
+
         $data = array(
             'menu' => 'pegawai',
             'submenu' => 'pegawai',
@@ -48,13 +50,14 @@ class PegawaiController extends Controller
         $user->remember_token = Str::random(60);
         $user->save();
 
-        $id = $user::select('id')->first();
+        $id = $user::select('id')->orderBy('id','desc')->first();
         DB::table('pegawai')->insert([
             'nama_pegawai' => $request->nama_pegawai,
             'jk_pegawai' => $request->jk_pegawai,
             'no_telp' => $request->no_telp,
             'alamat_pegawai' => $request->alamat_pegawai,
             'status_pegawai' => $request->status_pegawai,
+            'id_user' => $id->id
         ]);
 
         return redirect('/pegawai');

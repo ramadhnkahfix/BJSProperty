@@ -49,10 +49,10 @@
             <div class="form-group">
               <label>Role</label>
               <div class="col-sm-14">
-                <select name="jk_pegawai" class="form-control">
-                  <option value="">-Pilih Pegawai-</option>
-                  <option >Pegawai Gudang</option>
-                  <option >Kasir</option>
+                <select name="role" class="form-control">
+                  <option readonly>-Pilih Pegawai-</option>
+                  <option value="gudang">Pegawai Gudang</option>
+                  <option value="kasir">Kasir</option>
                 </select>
               </div>
             </div>
@@ -132,17 +132,10 @@
               @enderror
             </div>
           </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label>Konfirmasi Password</label>
-              <input type="password" name="password_confirmation" autocomplete="new-password" class="form-control @error('password_confirmation') is-invalid @enderror">
-              @error('password_confirmation')
-              <div class=" invalid-feedback">{{$message}}
-              </div>
-              @enderror
-            </div>
-          </div>
+        </div>
+        <div class="row">
           <button type="submit" class="btn btn-primary ">Simpan</button>
+        </div>
 
     </form>
     <!-- /.card-body -->
