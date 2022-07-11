@@ -122,6 +122,11 @@ class PemesananController extends Controller
         return view('pemesanan/addpemesanan', $data);
     }
 
+    public function add(Request $request){
+        dd($request);
+        return redirect('pemesanan.pemesanan');
+    }
+
 
     public function tambahPemesanan(Request $post)
     {

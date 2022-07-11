@@ -119,25 +119,28 @@
                 <th>Nomor</th>
                 <th>Nama Barang</th>
                 <th>Jumlah Barang</th>
-                <th>Harga Barang</th>
+                <th width="25%">Harga Barang</th>
               </tr>
             </thead>
-            <tbody class="data-barang">
+            <form action="{{route('insertpemesanan')}}" method="post">
+              @csrf
+              <tbody class="data-barang">
 
-            </tbody>
-            <tfoot>
-              <tr style="font-weight:bold;">
-                <td colspan="4" align="right">Total Harga</td>
-                <td>
-                  <div class="total-harga">0</div>
-                </td>
-              </tr>
-              <tr hidden>
-                <td colspan="5" align="right" class="p-5">
-                  <button type="submit" class="btn btn-primary" id="submitForm">Submit</button>
-                </td>
-              </tr>
-            </tfoot>
+              </tbody>
+              <tfoot>
+                <tr style="font-weight:bold;">
+                  <td colspan="4" align="right">Total Harga</td>
+                  <td>
+                    <div class="total-harga">0</div>
+                  </td>
+                </tr>
+                <tr hidden>
+                  <td colspan="5" align="right" class="p-5">
+                    <button type="submit" class="btn btn-primary" id="submitForm">Submit</button>
+                  </td>
+                </tr>
+              </tfoot>
+            </form>
           </table>
         </div>
         <!-- /.card-body -->
@@ -260,10 +263,10 @@
           $('.data-barang').empty();
           $('.total-harga').empty();
           $.each(data, function(key, value) {
-            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td><input name="quantity" style="border:none; background-color:transparent;" class="form-control pl-0" value="'+value['quantity']+'" readonly></td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
             total_harga += value['harga'];
           });
-          $('.total-harga').html(commaSeparateNumber(total_harga));
+          $('.total-harga').append('<input name="total_harga" class="form-control pl-0" style="border:none; background-color:transparent;" value="'+commaSeparateNumber(total_harga)+'" readonly>');
           $('tfoot tr:last').removeAttr('hidden');
         },
         error: function(data) {
