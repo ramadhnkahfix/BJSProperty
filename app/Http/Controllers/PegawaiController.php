@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +17,7 @@ class PegawaiController extends Controller
     public function index()
     {
         $pegawai = DB::table('pegawai')->get();
+
         $data = array(
             'menu' => 'pegawai',
             'submenu' => 'pegawai',
@@ -36,23 +39,25 @@ class PegawaiController extends Controller
         return view('pegawai/addpegawai',$data); 
     }
 
-    public function tambahPegawai(Request $post)
+    public function tambahPegawai(Request $request)
     {  
-        $user = new \app\user;
-        $user->role = 'pegawai';
+
+        $user = new \App\Models\User;
+        $user->role = $request->role;
         $user->name = $request->nama_pegawai;
         $user->email = $request->email;
-        $user->password = bcrypt('rahasia');
-        $user->remember_token = str_random(60);
+        $user->password = bcrypt($request->password);
+        $user->remember_token = Str::random(60);
         $user->save();
 
-        $request->request->add(['id_user' => $user->id ]);
+        $id = $user::select('id')->orderBy('id','desc')->first();
         DB::table('pegawai')->insert([
-            'nama_pegawai' => $post->nama_pegawai,
-            'jk_pegawai' => $post->jk_pegawai,
-            'no_telp' => $post->no_telp,
-            'alamat_pegawai' => $post->alamat_pegawai,
-            'status_pegawai' => $post->status_pegawai,
+            'nama_pegawai' => $request->nama_pegawai,
+            'jk_pegawai' => $request->jk_pegawai,
+            'no_telp' => $request->no_telp,
+            'alamat_pegawai' => $request->alamat_pegawai,
+            'status_pegawai' => $request->status_pegawai,
+            'id_user' => $id->id
         ]);
 
         return redirect('/pegawai');
