@@ -31,7 +31,7 @@ class PemesananController extends Controller
 
     public function getBarang($id)
     {
-        $barang = DB::table('barang')->where('supplier_id', $id)->get();
+        $barang = DB::table('barang')->get();
         return json_encode($barang);
     }
 
@@ -141,9 +141,9 @@ class PemesananController extends Controller
         return redirect('/pemesanan');
     }
 
-    public function hapus($id_pemesanan)
+    public function hapus($id)
     {
-        DB::table('pemesanan')->where('id_pemesanan', $id_pemesanan)->delete();
+        DB::table('pemesanan')->where('id', $id)->delete();
         return redirect('/pemesanan');
     }
 

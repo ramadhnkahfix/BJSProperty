@@ -1,8 +1,8 @@
 @extends("layout.mainlayout")
 
-@section("page_title","Penerimaan")
+@section("page_title","Pemesanan")
 
-@section("title","Penerimaan")
+@section("title","Pemesanan")
 
 @section("breadcrumb")
 <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
@@ -58,7 +58,7 @@
                                 <td>{{$data->tgl_pemesanan}}</td>
                                 <td>{{number_format($data->total_harga)}}</td>
                                 <td>
-                                    <a href='/penerimaan/editpenerimaan/{{ $data->id }}' class="btn btn-primary">
+                                    <a href='/pemesanan/editpemesanan/{{ $data->id }}' class="btn btn-primary">
                                         <i class="fas fa-eye"></i> Detail</button>
                                     </a>
                                     <button onclick="confirmDelete('{{ $data->id }}')" class="btn btn-danger">
@@ -86,7 +86,7 @@
 <!-- /.card -->
 
 
-<div class="modal fade" id="deletepenerimaan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="deletepemesanan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,7 +96,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Apakah anda yakin ingin mengahpus data ini?
+                Apakah anda yakin ingin menghapus data ini?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -132,8 +132,8 @@
 <script>
     function confirmDelete(id) {
         var link = document.getElementById('deleteLink')
-        link.href = "/penerimaan/hapus/" + id
-        $('#deletepenerimaan').modal('show')
+        link.href = "/pemesanan/hapus/" + id
+        $('#deletepemesanan').modal('show')
     }
 </script>
 @endsection
