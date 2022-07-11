@@ -14,7 +14,7 @@ class SuplierController extends Controller
     //
     public function index()
     {
-        $suplier = DB::table('suplier')->get();
+        $suplier = DB::table('suplier')->where('status',0)->get();
         $data = array(
             'menu' => 'suplier',
             'submenu' => 'suplier',

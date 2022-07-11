@@ -42,29 +42,26 @@
           <div class="card-body">
             <div class="form-group">
               <label>Nama Barang</label>
-              <input type="text" name="nama_barang" class="form-control form-control-border" placeholder="Masukkan Nama Barang">
-            </div>
-            <div class="form-group">
-              <label>Satuan</label>
-              <select class="custom-select form-control-border" name="satuan">
-                <option>--Pilih Satuan--</option>
-                <option>Kg</option>
-                <option>Matt</option>
-                <option>Watt</option>
+              <select class="custom-select form-control-border" name="nama_barang" required>
+                <option readonly>-- Pilih Barang --</option>
               </select>
+              <p class="small-text"><small style="color: red;"> *pilih supplier terlebih dahulu</small></p>
             </div>
             <div class="form-group">
               <label>Jumlah Barang</label>
-              <input type="number" name="jml_barang" class="form-control form-control-border" placeholder="Masukkan Jumlah Barang">
+              <input type="number" name="jml_barang" class="form-control form-control-border" placeholder="Masukkan Jumlah Barang" readonly>
+              <p class="mini-text"><small style="color: red;"> *pilih barang terlebih dahulu</small></p>
             </div>
             <div class="form-group">
               <label>Harga Barang</label>
-              <input type="number" name="harga_barang" class="form-control form-control-border" placeholder="Masukkan Harga Barang">
+              <div class="harga">
+                <input type="number" name="harga_barang" class="form-control form-control-border" placeholder="Masukkan Harga Barang" readonly>
+              </div>
             </div>
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary btn-block">Tambah</button>
+            <button type="submit" id="buttonInsertDetail" class="btn btn-primary btn-block">Tambah</button>
           </div>
         </div>
       </div>
@@ -86,19 +83,19 @@
           <div class="card-body">
             <div class="form-group">
               <label>Kode Pembelian</label>
-              <input type="text" class="form-control form-control-border" value="PEM003" readonly>
+              <input type="text" class="form-control form-control-border" name="kode_pemesanan" value="{{$kode_pemesanan}}" readonly>
             </div>
             <div class="form-group">
               <label>Tanggal Pembelian</label>
-              <input type="text" class="form-control form-control-border" placeholder="dd/mm/yy">
+              <input type="date" name="tgl_penerimaan" class="form-control" value="{{old('tgl_penerimaan') }}">
             </div>
             <div class="form-group">
               <label>Supplier</label>
-              <select class="custom-select form-control-border" name="satuan">
-                <option>--Pilih Supplier--</option>
-                <option>Konn</option>
-                <option>Matt</option>
-                <option>Watt</option>
+              <select class="custom-select form-control-border" name="supplier">
+                <option readonly>--Pilih Supplier--</option>
+                @foreach($supliers as $suplier)
+                <option value="{{$suplier->id_suplier}}">{{$suplier->nama_suplier}}</option>
+                @endforeach
               </select>
             </div>
             <!-- /.card-body -->
@@ -112,39 +109,35 @@
         <div class="card-header">
           <h3 class="card-title">Detail Pemesanan</h3>
 
-          <div class="card-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-default">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
           <table class="table table-hover text-nowrap">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Reason</th>
+                <th></th>
+                <th>Nomor</th>
+                <th>Nama Barang</th>
+                <th>Jumlah Barang</th>
+                <th>Harga Barang</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>183</td>
-                <td>John Doe</td>
-                <td>11-7-2014</td>
-                <td><span class="tag tag-success">Approved</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
+            <tbody class="data-barang">
+
             </tbody>
+            <tfoot>
+              <tr style="font-weight:bold;">
+                <td colspan="4" align="right">Total Harga</td>
+                <td>
+                  <div class="total-harga">0</div>
+                </td>
+              </tr>
+              <tr hidden>
+                <td colspan="5" align="right" class="p-5">
+                  <button type="submit" class="btn btn-primary" id="submitForm">Submit</button>
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
         <!-- /.card-body -->
@@ -190,5 +183,152 @@
     link.href = "/pemesanan/hapus/" + id
     $('#deletepemesanan').modal('show')
   }
+  // Get Supplier
+  $(document).ready(function() {
+    $('select[name="supplier"]').on('change', function() {
+      let supplierId = $(this).val();
+      if (supplierId) {
+        jQuery.ajax({
+          url: '/getBarang/' + supplierId,
+          type: "GET",
+          dataType: "json",
+          success: function(data) {
+            $('select[name="nama_barang"]').empty();
+            $('.small-text').hide();
+            $.each(data, function(key, value) {
+              $('select[name="nama_barang"]').append('<option value="' + value['id_barang'] + '">' + value['nama_barang'] + '</option>');
+            });
+          },
+        });
+      } else {
+        $('select[name="nama_barang"]').empty();
+      }
+    });
+    // Get Barang 
+    $('select[name="nama_barang"]').on('click', function() {
+      let barangID = $(this).val();
+      if (barangID) {
+        jQuery.ajax({
+          url: '/getBarangDetail/' + barangID,
+          type: "GET",
+          dataType: "json",
+          success: function(data) {
+            $('input[name="jml_barang"]').removeAttr('readonly');
+            $('.mini-text').hide();
+            $('.harga').empty();
+            $('input[name="jml_barang"]').empty();
+            // console.log(data);
+            $.each(data, function(key, value) {
+              $('.harga').append('<input value="' + value['harga_barang'] + '" name="harga_barang" type="number" class="form-control form-control-border" required readonly>');
+            });
+          },
+        });
+      } else {
+        $('.harga').empty();
+      }
+    });
+  });
+  // Post to Detail
+  $(document).ready(function() {
+    $('#buttonInsertDetail').on('click', function(e) {
+      e.preventDefault();
+
+      let token = $('meta[name="csrf-token"]').attr('content');
+      let kode_pemesanan = $('input[name="kode_pemesanan"]').val();
+      let tgl = $('input[name="tgl_penerimaan"]').val();
+      let supplier = $('input[name="supplier"]').val();
+      let nama_barang = $('select[name="nama_barang"]').val();
+      let qty = $('input[name="jml_barang"]').val();
+      let harga = $('input[name="harga_barang"]').val();
+
+      jQuery.ajax({
+        url: "/pemesanan/insert",
+        dataType: "JSON",
+        type: "POST",
+        data: {
+          _token: token,
+          kode_pemesanan: kode_pemesanan,
+          tgl_pemesanan: tgl,
+          supplier: supplier,
+          nama_barang: nama_barang,
+          quantity: qty,
+          harga_barang: harga,
+        },
+        success: function(data) {
+          num = 1;
+          total_harga = 0;
+          $('.data-barang').empty();
+          $('.total-harga').empty();
+          $.each(data, function(key, value) {
+            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+            total_harga += value['harga'];
+          });
+          $('.total-harga').html(commaSeparateNumber(total_harga));
+          $('tfoot tr:last').removeAttr('hidden');
+        },
+        error: function(data) {
+          console.log('Error:', data);
+          alert('Something Wrong');
+        }
+      });
+    });
+  });
+
+  // Delete Detail
+  function DeleteFunction(id) {
+
+    let token = $('meta[name="csrf-token"]').attr('content');
+    jQuery.ajax({
+      url: "/pemesanan/delete/" + id,
+      dataType: "JSON",
+      type: "patch",
+      data: {
+        _token: token,
+        id: id
+      },
+      success: function(data) {
+        num = 1;
+        total_harga = 0;
+        $('.data-barang').empty();
+        $('.total-harga').empty();
+        $.each(data, function(key, value) {
+          $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+          total_harga += value['harga'];
+        });
+        $('.total-harga').html(commaSeparateNumber(total_harga));
+      },
+      error: function(data) {
+        console.log('Error:', data);
+        alert('Something Wrong');
+      }
+    });
+  }
+
+  // Number Format
+  function commaSeparateNumber(val) {
+    // remove sign if negative
+    var sign = 1;
+    if (val < 0) {
+      sign = -1;
+      val = -val;
+    }
+
+    // trim the number decimal point if it exists
+    let num = val.toString().includes('.') ? val.toString().split('.')[0] : val.toString();
+
+    while (/(\d+)(\d{3})/.test(num.toString())) {
+      // insert comma to 4th last position to the match number
+      num = num.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+    }
+
+    // add number after decimal point
+    if (val.toString().includes('.')) {
+      num = num + '.' + val.toString().split('.')[1];
+    }
+
+    // return result with - sign if negative
+    return sign < 0 ? '-' + num : num;
+  }
+  // End Number Format
 </script>
 @endsection

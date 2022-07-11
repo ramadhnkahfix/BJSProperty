@@ -44,6 +44,10 @@ Route::post('/registration', [LoginController::class, 'registration'])->name('po
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
 Route::get('/pemesanan', [PemesananController::class, 'index']);
+Route::get('/getBarang/{id}',[PemesananController::class,'getBarang']);
+Route::get('/getBarangDetail/{id}',[PemesananController::class,'getBarangDetail']);
+Route::post('/pemesanan/insert', [PemesananController::class, 'insert']);
+Route::patch('/pemesanan/delete/{id}',[PemesananController::class,'delete']);
 Route::get('/pemesanan/addpemesanan', [PemesananController::class, 'insertPemesanan']);
 Route::post('/pemesanan/addpemesanan', [PemesananController::class, 'tambahPemesanan']);
 Route::get('/pemesanan/hapus/{id_pemesanan}', [PemesananController::class, 'hapus']);
