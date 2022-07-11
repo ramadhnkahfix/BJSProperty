@@ -72,7 +72,7 @@
                             </td>
                          <td>
 
-                         <a href='/pembayaran/editpembayaran/{{ $data->id_pembayaran }}' class="btn btn-danger"> 
+                         <a href='/pembayaran/editpembayaran/{{ $data->id_pembayaran }}' class="btn btn-primary"> 
                             <i class="fas fa-edit"></i> Edit</button>
                             </a>
 

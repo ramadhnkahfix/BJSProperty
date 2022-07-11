@@ -78,7 +78,7 @@
                                   @endif
                             </td>
                          <td>
-                            <a href='/pegawai/editpegawai/{{ $data->id_pegawai }}' class="btn btn-danger"> 
+                            <a href='/pegawai/editpegawai/{{ $data->id_pegawai }}' class="btn btn-primary"> 
                             <i class="fas fa-edit"></i> Edit</button>
                             </a> 
                             

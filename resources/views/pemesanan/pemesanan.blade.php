@@ -29,7 +29,6 @@
   </div>
 
   <div class="card-body">
-  <div class="card-body">
     <div class="card">
 			<div class="card-header">
 				<a href="/pemesanan/addpemesanan">
@@ -49,56 +48,42 @@
         $num = 1;
       ?>
       <div class="card-body">
-      <table class="table table-bordered">
+            <table class="table table-bordered">
                   <thead>                  
                     <tr>
                       <!-- <th><input name="select_all" value="" id="example-select-all" type="checkbox" /></th> -->
                       <th style="width: 10px">No</th>
                       <th>Tgl Pemesanan </th>
                       <th>Suplier</th>
-                      <th>Nama Barang </th>
-                      <th>Jumlah Barang</th>
-                      <th>Harga Barang </th>
                       <th>Harga Total Barang </th>
                       <th>Aksi </th>
                     </tr>
                   </thead>
                   <tbody>
-                  @foreach($pemesanan as $data)     
-                      <tr> 
-                         <td>{{ $num++ }}</td>
-                         <td>{{$data->tgl_pemesanan}}</td> 
-                         <td>{{$data->suplier->suplier}}</td> 
-                         <td>{{$data->nama_barang}}</td> 
-                         <td>{{$data->jml_barang}}</td>
-                         <td>{{$data->harga_barang}}</td>
-                         <td>{{$data->jml_barang * $data->harga_barang}}</td>
-                         <td>
-                            <a href='/pemesanan/editpemesanan/{{ $data->id_pemesanan }}' class="btn btn-danger"> 
-                            <i class="fas fa-edit"></i> Edit</button>
-                            </a> 
+                    @foreach($pemesanan as $data)     
+                        <tr> 
+                          <td>{{ $num++ }}</td>
+                          <td>{{$data->tgl_pemesanan}}</td> 
 
-                          <button onclick="confirmDelete('{{ $data->id_pemesanan }}')" class="btn btn-danger">
-                          <i class="fas fa-trash"></i> Hapus</button>
-                          </td>
-                      </tr> 
-                  @endforeach
+                          <td>{{$data->id_suplier}}</td> 
+                          <td>{{$data->jml_barang * $data->harga_barang}}</td>
+                          <td>
+                              <a href='/pemesanan/editpemesanan/{{ $data->id_pemesanan }}' class="btn btn-primary"> 
+                              <i class="fas fa-edit"></i> Edit</button>
+                              </a> 
 
+                            <button onclick="confirmDelete('{{ $data->id_pemesanan }}')" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Hapus</button>
+                            </td>
+                        </tr> 
+                    @endforeach
                   </tbody>
-
-                  
-                </table>
-      </div>
-    </div>
-
-			<!-- /.card-body -->
+              </table>
+          </div>
+			<!-- /.card -->
 		</div>
-		<!-- /.card -->
   </div>
   <!-- /.card-body -->
-  <div class="card-footer">
-  </div>
-  <!-- /.card-footer-->
 </div>
 <!-- /.card -->
 

@@ -78,7 +78,7 @@
                                   @endif
                             </td>
                          <td>
-                            <a href='/suplier/editsuplier/{{ $data->id_suplier }}' class="btn btn-danger"> 
+                            <a href='/suplier/editsuplier/{{ $data->id_suplier }}' class="btn btn-primary"> 
                             <i class="fas fa-edit"></i> Edit</button>
                             </a> 
                             

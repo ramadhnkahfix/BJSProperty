@@ -15,6 +15,7 @@ class PemesananController extends Controller
     public function index()
     {
         $pemesanan = DB::table('pemesanan','suplier')->get();
+
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
@@ -27,11 +28,20 @@ class PemesananController extends Controller
     public function insertPemesanan()
     {
         $barang = DB::table('barang')->get();
-        $pemesanan = DB::table('pemesanan')->join('barang', 'pemesanan.id_barang', '=', 'barang.id_barang')->get();
+        $suplier = DB::table('suplier')->get();
+        $pemesanan = DB::table('pemesanan')
+        ->join('suplier', 'pemesanan.id_suplier', '=', 'suplier.id_suplier')
+        ->get();
+        $pemesanan = DB::table('pemesanan')
+        ->join('barang', 'pemesanan.nama_barang', '=', 'barang.nama_barang')
+        ->get();
         $pemesanan = DB::table('pemesanan')->get();
+        
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
+            'suplier' => $suplier,
+            'barang' => $barang,
             'pemesanan' => $pemesanan,
         );
 
@@ -43,6 +53,7 @@ class PemesananController extends Controller
     {  
         DB::table('pemesanan')->insert([
             'tgl_pemesanan' => $post->tgl_pemesanan,
+            'id_suplier' => $post->id_suplier,
             'nama_barang' => $post->nama_barang,
             'jml_barang' => $post->jml_barang,
             'harga_barang' => $post->harga_barang,

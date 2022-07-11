@@ -62,7 +62,7 @@
                          <td>{{$data->catatan}}</td>
                          
                          <td>
-                          <a href='/penerimaan/editpenerimaan/{{ $data->id_penerimaan }}' class="btn btn-danger"> 
+                          <a href='/penerimaan/editpenerimaan/{{ $data->id_penerimaan }}' class="btn btn-primary"> 
                             <i class="fas fa-edit"></i> Edit</button>
                             </a>
                           <button onclick="confirmDelete('{{ $data->id_penerimaan }}')" class="btn btn-danger">

@@ -58,7 +58,7 @@
                          <td>{{$data->jml_barang}}</td>
                          <td>{{$data->harga_barang}}</td>
                          <td>
-                            <a href='/barang/editbarang/{{ $data->id_barang }}' class="btn btn-danger"> 
+                            <a href='/barang/editbarang/{{ $data->id_barang }}' class="btn btn-primary"> 
                             <i class="fas fa-edit"></i> Edit</button>
                             </a> 
                             

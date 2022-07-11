@@ -35,7 +35,6 @@
     <div class="content">
         <div class="row">
             <div class="col-sm-6">
-
                 <div class="form-group">
                     <label>Tanggal Pemesanan</label>
                     <input type="date" name="tgl_pemesanan" class="form-control" value="{{old('tgl_pemesanan') }}">
@@ -46,24 +45,26 @@
                     </div>
                 </div>
 
-                <!-- <div class="form-group">
-                    <label>Catatan</label>
-                    <input name="catatan" class="form-control" value="{{old('catatan') }}">
-                    <div class="text-danger">
-                        @error('catatan')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                </div> -->
-
                 <div class="form-group">
-                    <label>Nama Barang</label>
-                    <input name="nama_barang" class="form-control" value="{{old('nama_barang') }}">
-                    <div class="text-danger">
-                        @error('nama_barang')
-                            {{ $message }}
-                        @enderror
-                    </div>
+                  <label>Suplier</label>
+                  <select name="id_suplier" class="form-control" >
+                    <option>Pilih.</option>
+                    @foreach ($suplier as $item)
+                      <option value="{{ $item->id_suplier }}">{{  $item->nama_suplier }}</option>
+                    @endforeach
+                  </select>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Nama barang</label>
+                    <select name="nama_barang" class="form-control" >
+                        <option>Pilih.</option>
+                        @foreach ($barang as $item)
+                        <option value="{{ $item->nama_barang }}">{{  $item->nama_barang }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -85,18 +86,17 @@
                         @enderror
                     </div>
                 </div>
-
-
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
+        
+        <button type="submit" class="btn btn-success">Tambah</button>
+
 
       </form>
 
     </div>
     <!-- /.card-body -->
-
-    <div class="card-footer">
-
-    </div>
     <!-- /.card-footer-->
   <!-- </div> -->
   <!-- </div> -->
