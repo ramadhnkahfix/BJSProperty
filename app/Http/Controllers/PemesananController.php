@@ -19,7 +19,7 @@ class PemesananController extends Controller
     //
     public function index()
     {
-        $supliers = DB::table('suplier')->where('status',0)->get();
+        $supliers = DB::table('suplier')->where('status_suplier',0)->get();
         $pemesanan = DB::table('pemesanan')->get();
         $kode_pemesanan = "PE".date('dmY').rand(0,999);
         $data = array(
