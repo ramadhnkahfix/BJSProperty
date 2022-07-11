@@ -4,18 +4,22 @@
 @section('content')
 <form action="{{route('edit.barang', $barang->id_barang)}}" method="POST">
     @method('PATCH')
-@csrf
+    @csrf
 
     <div class="content">
         <div class="row">
             <div class="col-sm-6">
 
                 <div class="form-group">
+                    <label>Nama Suplier</label>
+                    <input name="suplier" class="form-control" value="{{$supplier}}" readonly>
+                </div>
+                <div class="form-group">
                     <label>Nama Barang</label>
                     <input name="nama_barang" class="form-control" value="{{$barang->nama_barang}}">
                     <div class="text-danger">
                         @error('nama_barang')
-                            {{ $message }}
+                        {{ $message }}
                         @enderror
                     </div>
                 </div>
@@ -25,7 +29,7 @@
                     <input name="jml_barang" class="form-control" value="{{$barang->jml_barang}}">
                     <div class="text-danger">
                         @error('jml_barang')
-                            {{ $message }}
+                        {{ $message }}
                         @enderror
                     </div>
                 </div>
@@ -35,17 +39,17 @@
                     <input name="harga_barang" class="form-control" value="{{$barang->harga_barang}}">
                     <div class="text-danger">
                         @error('harga_barang')
-                            {{ $message }}
+                        {{ $message }}
                         @enderror
                     </div>
                 </div>
 
-                
+
                 <div class="form-group">
                     <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
+                </div>
             </div>
         </div>
-    </div>
 
 
 </form>

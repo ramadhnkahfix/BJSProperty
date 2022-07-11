@@ -21,27 +21,30 @@ class BarangController extends Controller
             'barang' => $barang,
         );
 
-        return view('barang/barang',$data); 
+        return view('barang/barang', $data);
     }
 
     public function insertBarang()
     {
         $barang = DB::table('barang')->get();
+        $suplier = DB::table('suplier')->get();
         $data = array(
             'menu' => 'barang',
             'submenu' => 'barang',
             'barang' => $barang,
+            'supliers' => $suplier
         );
 
-        return view('barang/addbarang',$data); 
+        return view('barang/addbarang', $data);
     }
 
     public function tambahBarang(Request $post)
-    {  
+    {
         DB::table('barang')->insert([
             'nama_barang' => $post->nama_barang,
             'jml_barang' => $post->jml_barang,
             'harga_barang' => $post->harga_barang,
+            'supplier_id' => $post->supplier
         ]);
 
         return redirect('/barang');
@@ -49,33 +52,35 @@ class BarangController extends Controller
 
     public function editBarang($id_barang)
     {
-        $barang = DB::table('barang')->where('id_barang','=',$id_barang)->first();
+        $barang = DB::table('barang')->where('id_barang', '=', $id_barang)->first();
+        $supplier = DB::table('suplier')->where('id_suplier', $barang->supplier_id)->first();
         $data = array(
             'menu' => 'barang',
             'submenu' => 'barang',
             'barang' => $barang,
+            'supplier' => $supplier->nama_suplier
         );
         return view('barang/editbarang', $data);
     }
 
-    public function updateBarang(Request $request,$id)
-    {  
-        $update = DB::table('barang')->where('id_barang','=',$id)->limit(1);
-            //$update->nama_barang => $post->nama_barang;
-            //$update->jml_barang => $request->jml_barang;
-            //$update->harga_barang => $request->harga_barang;
-            //$update->save();
+    public function updateBarang(Request $request, $id)
+    {
+        $update = DB::table('barang')->where('id_barang', '=', $id)->limit(1);
+        //$update->nama_barang => $post->nama_barang;
+        //$update->jml_barang => $request->jml_barang;
+        //$update->harga_barang => $request->harga_barang;
+        //$update->save();
         $update->update([
             'nama_barang' => $request->nama_barang,
             'jml_barang' => $request->jml_barang,
             'harga_barang' => $request->harga_barang
         ]);
-        return redirect('/barang')->with('status','Data Berhasil di Ubah');
+        return redirect('/barang')->with('status', 'Data Berhasil di Ubah');
     }
 
     public function hapus($id_barang)
     {
-    	DB::table('barang')->where('id_barang',$id_barang)->delete();
-	    return redirect('/barang');
+        DB::table('barang')->where('id_barang', $id_barang)->delete();
+        return redirect('/barang');
     }
 }
