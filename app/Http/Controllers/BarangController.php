@@ -27,7 +27,7 @@ class BarangController extends Controller
     public function insertBarang()
     {
         $barang = DB::table('barang')->get();
-        $suplier = DB::table('suplier')->get();
+        $suplier = DB::table('suplier')->where('status_suplier', 0)->get();
         $data = array(
             'menu' => 'barang',
             'submenu' => 'barang',
