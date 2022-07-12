@@ -123,7 +123,7 @@
                 <th>Nomor</th>
                 <th>Nama Barang</th>
                 <th>Jumlah Barang</th>
-                <th>Stok Barang</th>
+                <!-- <th>Stok Barang</th> -->
                 <th width="25%">Harga Barang</th>
               </tr>
             </thead>
@@ -132,13 +132,13 @@
             </tbody>
             <tfoot>
               <tr style="font-weight:bold;">
-                <td colspan="5" align="right">Total Harga</td>
+                <td colspan="4" align="right">Total Harga</td>
                 <td>
                   <div class="total-harga">0</div>
                 </td>
               </tr>
               <tr hidden>
-                <td colspan="6" align="right" class="p-5">
+                <td colspan="5" align="right" class="p-5">
                   <form action="{{route('insertpemesanan')}}" method="post">
                     @csrf
                     <div class="input-submit">
@@ -270,7 +270,7 @@
           $('.data-barang').empty();
           $('.total-harga').empty();
           $.each(data, function(key, value) {
-            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>'+value['quantity']+'</td><td>'+value['jml_barang']+'</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>'+value['quantity']+'</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
             $('.input-submit').append('<input name="id_pemesanan" value="'+value['pemesanan_id']+'" hidden>');
             total_harga += value['harga'];
           });
@@ -304,7 +304,7 @@
         $('.data-barang').empty();
         $('.total-harga').empty();
         $.each(data, function(key, value) {
-          $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>'+value['jml_barang']+'</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+          $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
           $('.input-submit').append('<input name="id_pemesanan" value="'+value['pemesanan_id']+'" hidden>');
           total_harga += value['harga'];
         });

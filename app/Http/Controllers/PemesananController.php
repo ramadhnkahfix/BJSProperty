@@ -18,7 +18,7 @@ class PemesananController extends Controller
     //
     public function index()
     {
-        $pemesanan = DB::table('pemesanan')->where('status',1)->orderBy('id','desc')->get();
+        $pemesanan = DB::table('pemesanan')->where('status', 1)->orderBy('id', 'desc')->get();
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
@@ -30,7 +30,7 @@ class PemesananController extends Controller
 
     public function getBarang($id)
     {
-        $barang = DB::table('barang')->where('supplier_id',$id)->get();
+        $barang = DB::table('barang')->where('supplier_id', $id)->get();
         return json_encode($barang);
     }
 
@@ -54,7 +54,7 @@ class PemesananController extends Controller
                 'status' => '0',
             ]);
         }
-        $pemesanan =Pemesanan::orderBy('id', 'desc')->first();
+        $pemesanan = Pemesanan::orderBy('id', 'desc')->first();
         if ($pemesanan->kode_pemesanan != $request->kode_pemesanan) {
             Pemesanan::insert([
                 'kode_pemesanan' => $request->kode_pemesanan,
@@ -121,29 +121,37 @@ class PemesananController extends Controller
         return view('pemesanan/addpemesanan', $data);
     }
 
-    public function add(Request $request){
+    public function add(Request $request)
+    {
         $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
         $pemesanan->update([
             'total_harga' => $request->total_harga,
             'status' => 1
         ]);
-        $detail_pemesanan = DetailPemesanan::where('pemesanan_id',$request->id_pemesanan)->get();
-
-        return redirect('/pemesanan')->with('success','Data Pemesanan Berhasil di Tambahkan');
+        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
+            ->where('pemesanan_id', $pemesanan->id)->get();
+        // foreach ($detail_pemesanan as $data) {
+        //     if ($data->quantity > $data->jml_barang) {
+        //         $message = "Quantity $data->nama_barang melebihi stok";
+        //         return json_encode($message);
+        //     }
+        // }
+        return redirect('/pemesanan')->with('success', 'Data Pemesanan Berhasil di Tambahkan');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $pemesanan = Pemesanan::findOrFail($id);
         $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
-        ->where('pemesanan_id', $id)->where('deleted_at', null)->get();
+            ->where('pemesanan_id', $id)->where('deleted_at', null)->get();
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
-            'pemesanan'=>$pemesanan,
-            'detail_pemesanan'=>$detail_pemesanan,
+            'pemesanan' => $pemesanan,
+            'detail_pemesanan' => $detail_pemesanan,
         );
 
-        return view('pemesanan/show',$data);
+        return view('pemesanan/show', $data);
     }
 
 

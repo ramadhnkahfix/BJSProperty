@@ -30,9 +30,12 @@
     <?php
     $num = 1;
     ?>
-    @if(Session::has('sueccess'))
-    <div class="alert alert-success">
-        {{Session::get('success')}}
+    @if(session('success'))
+    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show mx-5 mt-2">
+        {{session('success')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     @endif
     <div class="card-body">
