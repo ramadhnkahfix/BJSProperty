@@ -30,51 +30,52 @@
     <?php
     $num = 1;
     ?>
-
+    @if(Session::has('sueccess'))
+    <div class="alert alert-success">
+        {{Session::get('success')}}
+    </div>
+    @endif
     <div class="card-body">
-        <div class="card-body">
-            <div class="card">
-                <div class="card-header">
-                    <a href="/pemesanan/addpemesanan">
-                        <button type="button" class="btn btn-info float-right" style="float: right;"><i class="fas fa-plus"></i> Tambah Data</button>
-                    </a>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 10px">No</th>
-                                <th>Kode Pemesanan</th>
-                                <th>Tanggal Pemesanan</th>
-                                <th>Total Harga</th>
-                                <th>Aksi </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($pemesanan as $data)
-                            <tr>
-                                <td>{{ $num++ }}</td>
-                                <td>{{$data->kode_pemesanan}}</td>
-                                <td>{{$data->tgl_pemesanan}}</td>
-                                <td>{{number_format($data->total_harga)}}</td>
-                                <td>
-                                    <a href='/pemesanan/editpemesanan/{{ $data->id }}' class="btn btn-primary">
-                                        <i class="fas fa-eye"></i> Detail</button>
-                                    </a>
-                                    <button onclick="confirmDelete('{{ $data->id }}')" class="btn btn-danger">
-                                        <i class="fas fa-trash"></i> Hapus</button>
-                                </td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-
-
-                    </table>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <a href="/pemesanan/addpemesanan">
+                    <button type="button" class="btn btn-info float-right" style="float: right;"><i class="fas fa-plus"></i> Tambah Data</button>
+                </a>
             </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">No</th>
+                            <th>Kode Pemesanan</th>
+                            <th>Tanggal Pemesanan</th>
+                            <th>Total Harga</th>
+                            <th>Aksi </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pemesanan as $data)
+                        <tr>
+                            <td>{{ $num++ }}</td>
+                            <td>{{$data->kode_pemesanan}}</td>
+                            <td>{{$data->tgl_pemesanan}}</td>
+                            <td>{{number_format($data->total_harga)}}</td>
+                            <td>
+                                <a href='/pemesanan/detail/{{ $data->id }}' class="btn btn-info">
+                                    <i class="fas fa-download"></i> Download</button>
+                                </a>
+                                <a href='/pemesanan/detail/{{ $data->id }}' class="btn btn-primary">
+                                    <i class="fas fa-eye"></i> Detail</button>
+                                </a>
+                                <button onclick="confirmDelete('{{ $data->id }}')" class="btn btn-danger">
+                                    <i class="fas fa-trash"></i> Hapus</button>
+                            </td>
+                        </tr>
+                        @endforeach
 
-            <!-- /.card-body -->
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- /.card -->
     </div>
@@ -107,7 +108,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 

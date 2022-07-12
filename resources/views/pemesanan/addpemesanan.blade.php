@@ -108,7 +108,11 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Detail Pemesanan</h3>
-
+          @if(Session::has('error'))
+          <div class="alert alert-warning">
+            {{Session::get('error')}}
+          </div>
+          @endif
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -119,28 +123,31 @@
                 <th>Nomor</th>
                 <th>Nama Barang</th>
                 <th>Jumlah Barang</th>
+                <th>Stok Barang</th>
                 <th width="25%">Harga Barang</th>
               </tr>
             </thead>
-            <form action="{{route('insertpemesanan')}}" method="post">
-              @csrf
-              <tbody class="data-barang">
+            <tbody class="data-barang">
 
-              </tbody>
-              <tfoot>
-                <tr style="font-weight:bold;">
-                  <td colspan="4" align="right">Total Harga</td>
-                  <td>
-                    <div class="total-harga">0</div>
-                  </td>
-                </tr>
-                <tr hidden>
-                  <td colspan="5" align="right" class="p-5">
+            </tbody>
+            <tfoot>
+              <tr style="font-weight:bold;">
+                <td colspan="5" align="right">Total Harga</td>
+                <td>
+                  <div class="total-harga">0</div>
+                </td>
+              </tr>
+              <tr hidden>
+                <td colspan="6" align="right" class="p-5">
+                  <form action="{{route('insertpemesanan')}}" method="post">
+                    @csrf
+                    <div class="input-submit">
+                    </div>
                     <button type="submit" class="btn btn-primary" id="submitForm">Submit</button>
-                  </td>
-                </tr>
-              </tfoot>
-            </form>
+                  </form>
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
         <!-- /.card-body -->
@@ -263,10 +270,12 @@
           $('.data-barang').empty();
           $('.total-harga').empty();
           $.each(data, function(key, value) {
-            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td><input name="quantity" style="border:none; background-color:transparent;" class="form-control pl-0" value="'+value['quantity']+'" readonly></td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>'+value['quantity']+'</td><td>'+value['jml_barang']+'</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+            $('.input-submit').append('<input name="id_pemesanan" value="'+value['pemesanan_id']+'" hidden>');
             total_harga += value['harga'];
           });
-          $('.total-harga').append('<input name="total_harga" class="form-control pl-0" style="border:none; background-color:transparent;" value="'+commaSeparateNumber(total_harga)+'" readonly>');
+          $('.total-harga').html(commaSeparateNumber(total_harga));
+          $('.input-submit').append('<input name="total_harga" value="'+total_harga+'" hidden>')
           $('tfoot tr:last').removeAttr('hidden');
         },
         error: function(data) {
@@ -295,10 +304,12 @@
         $('.data-barang').empty();
         $('.total-harga').empty();
         $.each(data, function(key, value) {
-          $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+          $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>'+value['jml_barang']+'</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+          $('.input-submit').append('<input name="id_pemesanan" value="'+value['pemesanan_id']+'" hidden>');
           total_harga += value['harga'];
         });
         $('.total-harga').html(commaSeparateNumber(total_harga));
+        $('.input-submit').append('<input name="total_harga" value="'+total_harga+'" hidden>')
       },
       error: function(data) {
         console.log('Error:', data);

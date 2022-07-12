@@ -45,6 +45,7 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 
 Route::get('/pemesanan', [PemesananController::class, 'index']);
 Route::post('/pemesanan', [PemesananController::class, 'add'])->name('insertpemesanan');
+Route::get('/pemesanan/detail/{id}',[PemesananController::class,'show']);
 Route::get('/pemesanan/addpemesanan', [PemesananController::class, 'insertPemesanan']);
 Route::get('/getBarang/{id}',[PemesananController::class,'getBarang']);
 Route::get('/getBarangDetail/{id}',[PemesananController::class,'getBarangDetail']);

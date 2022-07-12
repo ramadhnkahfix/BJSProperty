@@ -11,15 +11,14 @@ use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\Session;
 
 class PemesananController extends Controller
 {
     //
     public function index()
     {
-        $pemesanan = DB::table('pemesanan')->get();
+        $pemesanan = DB::table('pemesanan')->where('status',1)->orderBy('id','desc')->get();
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
@@ -31,7 +30,7 @@ class PemesananController extends Controller
 
     public function getBarang($id)
     {
-        $barang = DB::table('barang')->get();
+        $barang = DB::table('barang')->where('supplier_id',$id)->get();
         return json_encode($barang);
     }
 
@@ -88,7 +87,7 @@ class PemesananController extends Controller
                 ]);
             }
             $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
-                ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();;
+                ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();
         }
 
         return json_encode($detail_pemesanan);
@@ -101,7 +100,7 @@ class PemesananController extends Controller
         DetailPemesanan::destroy($id);
 
         $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
-            ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();;
+            ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();
 
         return json_encode($detail_pemesanan);
     }
@@ -123,8 +122,28 @@ class PemesananController extends Controller
     }
 
     public function add(Request $request){
-        dd($request);
-        return redirect('pemesanan.pemesanan');
+        $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
+        $pemesanan->update([
+            'total_harga' => $request->total_harga,
+            'status' => 1
+        ]);
+        $detail_pemesanan = DetailPemesanan::where('pemesanan_id',$request->id_pemesanan)->get();
+
+        return redirect('/pemesanan')->with('success','Data Pemesanan Berhasil di Tambahkan');
+    }
+
+    public function show($id){
+        $pemesanan = Pemesanan::findOrFail($id);
+        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
+        ->where('pemesanan_id', $id)->where('deleted_at', null)->get();
+        $data = array(
+            'menu' => 'pemesanan',
+            'submenu' => 'pemesanan',
+            'pemesanan'=>$pemesanan,
+            'detail_pemesanan'=>$detail_pemesanan,
+        );
+
+        return view('pemesanan/show',$data);
     }
 
 
