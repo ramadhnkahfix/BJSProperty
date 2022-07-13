@@ -28,10 +28,26 @@ class PemesananController extends Controller
         return view('pemesanan/pemesanan', $data);
     }
 
-    public function getBarang($id)
+    public function insertPemesanan()
     {
-        $barang = DB::table('barang')->where('supplier_id', $id)->get();
-        return json_encode($barang);
+        $barang = DB::table('barang')->get();
+        $pemesanan = DB::table('pemesanan')->get();
+        $kode_pemesanan = "PE" . date('dmY') . rand(0, 999);
+        $data = array(
+            'menu' => 'pemesanan',
+            'submenu' => 'pemesanan',
+            'pemesanan' => $pemesanan,
+            'barang' => $barang,
+            'kode_pemesanan' => $kode_pemesanan,
+        );
+
+        return view('pemesanan/addpemesanan', $data);
+    }
+
+    public function getBarang()
+    {
+        $supplier = DB::table('suplier')->where('status_suplier', 0)->get();
+        return json_encode($supplier);
     }
 
     public function getBarangDetail($id)
@@ -64,6 +80,7 @@ class PemesananController extends Controller
             $getPemesananID = Pemesanan::orderBy('id', 'desc')->first();
             DetailPemesanan::insert([
                 'pemesanan_id' => $getPemesananID->id,
+                'suplier_id' => $request->supplier,
                 'barang_id' => $request->nama_barang,
                 'quantity' => $request->quantity,
                 'harga' => $request->harga_barang * $request->quantity
@@ -81,6 +98,7 @@ class PemesananController extends Controller
             } else {
                 DetailPemesanan::insert([
                     'pemesanan_id' => $pemesanan->id,
+                    'suplier_id' => $request->supplier,
                     'barang_id' => $request->nama_barang,
                     'quantity' => $request->quantity,
                     'harga' => $request->harga_barang * $request->quantity
@@ -105,22 +123,6 @@ class PemesananController extends Controller
         return json_encode($detail_pemesanan);
     }
 
-    public function insertPemesanan()
-    {
-        $supliers = DB::table('suplier')->where('status_suplier', 0)->get();
-        $pemesanan = DB::table('pemesanan')->get();
-        $kode_pemesanan = "PE" . date('dmY') . rand(0, 999);
-        $data = array(
-            'menu' => 'pemesanan',
-            'submenu' => 'pemesanan',
-            'pemesanan' => $pemesanan,
-            'supliers' => $supliers,
-            'kode_pemesanan' => $kode_pemesanan,
-        );
-
-        return view('pemesanan/addpemesanan', $data);
-    }
-
     public function add(Request $request)
     {
         $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
@@ -128,21 +130,15 @@ class PemesananController extends Controller
             'total_harga' => $request->total_harga,
             'status' => 1
         ]);
-        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
-            ->where('pemesanan_id', $pemesanan->id)->get();
-        // foreach ($detail_pemesanan as $data) {
-        //     if ($data->quantity > $data->jml_barang) {
-        //         $message = "Quantity $data->nama_barang melebihi stok";
-        //         return json_encode($message);
-        //     }
-        // }
         return redirect('/pemesanan')->with('success', 'Data Pemesanan Berhasil di Tambahkan');
     }
 
     public function show($id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
-        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
+        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'suplier.nama_suplier', 'suplier.alamat_suplier')
+            ->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
+            ->join('suplier', 'suplier.id_suplier', '=', 'detail_pemesanans.suplier_id')
             ->where('pemesanan_id', $id)->where('deleted_at', null)->get();
         $data = array(
             'menu' => 'pemesanan',
@@ -154,6 +150,23 @@ class PemesananController extends Controller
         return view('pemesanan/show', $data);
     }
 
+    public function cetakNota($id)
+    {
+        $pemesanan = Pemesanan::findOrFail($id);
+        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'suplier.nama_suplier', 'suplier.alamat_suplier')
+            ->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
+            ->join('suplier', 'suplier.id_suplier', '=', 'detail_pemesanans.suplier_id')
+            ->where('pemesanan_id', $id)->where('deleted_at', null)->get();
+
+        $data = array(
+            'menu' => 'pemesanan',
+            'submenu' => 'pemesanan',
+            'pemesanan' => $pemesanan,
+            'detail_pemesanan' => $detail_pemesanan,
+        );
+
+        return view('pemesanan/cetak-nota-pemesanan', $data);
+    }
 
     public function tambahPemesanan(Request $post)
     {

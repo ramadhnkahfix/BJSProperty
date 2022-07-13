@@ -47,7 +47,6 @@
             <thead>
               <tr>
                 <th style="width: 10px">No</th>
-                <th>Nama Suplier</th>
                 <th>Nama Barang </th>
                 <th>Jumlah Barang </th>
                 <th>Harga Barang </th>
@@ -56,15 +55,13 @@
             </thead>
             <tbody>
               @foreach($barang as $data)
-              <?php $supplier = DB::table('suplier')->where('id_suplier', $data->supplier_id)->first(); ?>
               <tr>
                 <td>{{ $num++ }}</td>
-                <td>{{$supplier->nama_suplier}}</td>
                 <td>{{$data->nama_barang}}</td>
                 <td>{{$data->jml_barang}}</td>
                 <td>{{$data->harga_barang}}</td>
                 <td>
-                  <a href='/barang/editbarang/{{ $data->id_barang }}' class="btn btn-danger">
+                  <a href='/barang/editbarang/{{ $data->id_barang }}' class="btn btn-primary">
                     <i class="fas fa-edit"></i> Edit</button>
                   </a>
 

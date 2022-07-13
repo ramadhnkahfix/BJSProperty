@@ -9,11 +9,6 @@
     <div class="content">
         <div class="row">
             <div class="col-sm-6">
-
-                <div class="form-group">
-                    <label>Nama Suplier</label>
-                    <input name="suplier" class="form-control" value="{{$supplier}}" readonly>
-                </div>
                 <div class="form-group">
                     <label>Nama Barang</label>
                     <input name="nama_barang" class="form-control" value="{{$barang->nama_barang}}">

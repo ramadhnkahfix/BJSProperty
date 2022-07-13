@@ -28,11 +28,8 @@
                 <i class="fas fa-times"></i></button>
         </div>
     </div>
-    <?php
-    $num = 1;
-    ?>
     <div class="card-header">
-    <h5>Kode Pemesanan : {{$pemesanan->kode_pemesanan}}</h5>
+        <h5>Kode Pemesanan : {{$pemesanan->kode_pemesanan}}</h5>
     </div>
     <div class="card-body">
         <div class="card-body">
@@ -42,31 +39,45 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
+                                <th>Nama Suplier</th>
                                 <th>Nama Barang</th>
                                 <th>Quantity</th>
                                 <th>Harga</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            $num = 1;
+                            $total_harga = 0;
+                            ?>
                             @foreach($detail_pemesanan as $data)
                             <tr>
                                 <td>{{ $num++ }}</td>
+                                <td>
+                                    <b>{{$data->nama_suplier}}</b>
+                                    <p>Alamat :</p>
+                                    <p><b>{{$data->alamat_suplier}}</b></p>
+                                </td>
                                 <td>{{$data->nama_barang}}</td>
                                 <td>{{$data->quantity}}</td>
                                 <td>{{number_format($data->harga)}}</td>
                             </tr>
+                            <?php $total_harga += $data->harga ?>
                             @endforeach
-
+                            <tr>
+                                <td colspan="4" align="right">Total Harga</td>
+                                <td>{{$total_harga}}</td>
+                            </tr>
                         </tbody>
 
 
                     </table>
                 </div>
             </div>
-
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
+        <a href="/pemesanan" class="btn btn-outline-primary btn-sm">Kembali</a>
     </div>
     <!-- /.card-body -->
     <div class="card-footer">

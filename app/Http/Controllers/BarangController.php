@@ -27,12 +27,10 @@ class BarangController extends Controller
     public function insertBarang()
     {
         $barang = DB::table('barang')->get();
-        $suplier = DB::table('suplier')->where('status_suplier', 0)->get();
         $data = array(
             'menu' => 'barang',
             'submenu' => 'barang',
             'barang' => $barang,
-            'supliers' => $suplier
         );
 
         return view('barang/addbarang', $data);
@@ -44,7 +42,6 @@ class BarangController extends Controller
             'nama_barang' => $post->nama_barang,
             'jml_barang' => $post->jml_barang,
             'harga_barang' => $post->harga_barang,
-            'supplier_id' => $post->supplier
         ]);
 
         return redirect('/barang');
@@ -53,12 +50,10 @@ class BarangController extends Controller
     public function editBarang($id_barang)
     {
         $barang = DB::table('barang')->where('id_barang', '=', $id_barang)->first();
-        $supplier = DB::table('suplier')->where('id_suplier', $barang->supplier_id)->first();
         $data = array(
             'menu' => 'barang',
             'submenu' => 'barang',
-            'barang' => $barang,
-            'supplier' => $supplier->nama_suplier
+            'barang' => $barang
         );
         return view('barang/editbarang', $data);
     }
@@ -66,10 +61,6 @@ class BarangController extends Controller
     public function updateBarang(Request $request, $id)
     {
         $update = DB::table('barang')->where('id_barang', '=', $id)->limit(1);
-        //$update->nama_barang => $post->nama_barang;
-        //$update->jml_barang => $request->jml_barang;
-        //$update->harga_barang => $request->harga_barang;
-        //$update->save();
         $update->update([
             'nama_barang' => $request->nama_barang,
             'jml_barang' => $request->jml_barang,

@@ -31,7 +31,7 @@
     $num = 1;
     ?>
     @if(session('success'))
-    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show mx-5 mt-2">
+    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show mx-5 mt-2 mb-0">
         {{session('success')}}
         <button type="button" class="close" data-dismiss="alert" aria-label="close">
             <span aria-hidden="true">&times;</span>
@@ -49,7 +49,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 10px">No</th>
+                            <th>No</th>
                             <th>Kode Pemesanan</th>
                             <th>Tanggal Pemesanan</th>
                             <th>Total Harga</th>
@@ -64,7 +64,7 @@
                             <td>{{$data->tgl_pemesanan}}</td>
                             <td>{{number_format($data->total_harga)}}</td>
                             <td>
-                                <a href='/pemesanan/detail/{{ $data->id }}' class="btn btn-info">
+                                <a href='/pemesanan/cetak-nota/{{ $data->id }}' target="_blank" class="btn btn-info">
                                     <i class="fas fa-download"></i> Download</button>
                                 </a>
                                 <a href='/pemesanan/detail/{{ $data->id }}' class="btn btn-primary">

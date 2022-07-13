@@ -36,15 +36,6 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Supplier</label>
-                            <select class="custom-select form-control-border" name="supplier">
-                                <option readonly>-- Pilih Supplier --</option>
-                                @foreach($supliers as $suplier)
-                                <option value="{{$suplier->id_suplier}}">{{$suplier->nama_suplier}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label>Nama Barang</label>
                             <input name="nama_barang" class="form-control" value="{{old('nama_barang') }}">
                             <div class="text-danger">

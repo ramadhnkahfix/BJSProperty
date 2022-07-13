@@ -44,8 +44,10 @@
               <label>Nama Barang</label>
               <select class="custom-select form-control-border" name="nama_barang" required>
                 <option readonly>-- Pilih Barang --</option>
+                @foreach($barang as $data)
+                <option value="{{$data->id_barang}}">{{$data->nama_barang}}</option>
+                @endforeach
               </select>
-              <p class="small-text"><small style="color: red;"> *pilih supplier terlebih dahulu</small></p>
             </div>
             <div class="form-group">
               <label>Jumlah Barang</label>
@@ -93,10 +95,8 @@
               <label>Supplier</label>
               <select class="custom-select form-control-border" name="supplier">
                 <option readonly>--Pilih Supplier--</option>
-                @foreach($supliers as $suplier)
-                <option value="{{$suplier->id_suplier}}">{{$suplier->nama_suplier}}</option>
-                @endforeach
               </select>
+              <p class="small-text"><small style="color: red;"> *pilih barang terlebih dahulu</small></p>
             </div>
             <!-- /.card-body -->
           </div>
@@ -108,11 +108,6 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Detail Pemesanan</h3>
-          @if(Session::has('error'))
-          <div class="alert alert-warning">
-            {{Session::get('error')}}
-          </div>
-          @endif
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -195,27 +190,27 @@
   }
   // Get Supplier
   $(document).ready(function() {
-    $('select[name="supplier"]').on('change', function() {
-      let supplierId = $(this).val();
-      if (supplierId) {
+    $('select[name="nama_barang"]').on('change', function() {
+      let barangId = $(this).val();
+      if (barangId) {
         jQuery.ajax({
-          url: '/getBarang/' + supplierId,
+          url: '/getBarang',
           type: "GET",
           dataType: "json",
           success: function(data) {
-            $('select[name="nama_barang"]').empty();
+            $('select[name="supplier"]').empty();
             $('.small-text').hide();
             $.each(data, function(key, value) {
-              $('select[name="nama_barang"]').append('<option value="' + value['id_barang'] + '">' + value['nama_barang'] + '</option>');
+              $('select[name="supplier"]').append('<option value="' + value['id_suplier'] + '">' + value['nama_suplier'] + '</option>');
             });
           },
         });
       } else {
-        $('select[name="nama_barang"]').empty();
+        $('select[name="supplier"]').empty();
       }
     });
     // Get Barang 
-    $('select[name="nama_barang"]').on('click', function() {
+    $('select[name="nama_barang"]').on('change', function() {
       let barangID = $(this).val();
       if (barangID) {
         jQuery.ajax({
@@ -270,12 +265,12 @@
           $('.data-barang').empty();
           $('.total-harga').empty();
           $.each(data, function(key, value) {
-            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>'+value['quantity']+'</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
-            $('.input-submit').append('<input name="id_pemesanan" value="'+value['pemesanan_id']+'" hidden>');
+            $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
+            $('.input-submit').append('<input name="id_pemesanan" value="' + value['pemesanan_id'] + '" hidden>');
             total_harga += value['harga'];
           });
           $('.total-harga').html(commaSeparateNumber(total_harga));
-          $('.input-submit').append('<input name="total_harga" value="'+total_harga+'" hidden>')
+          $('.input-submit').append('<input name="total_harga" value="' + total_harga + '" hidden>')
           $('tfoot tr:last').removeAttr('hidden');
         },
         error: function(data) {
@@ -305,11 +300,11 @@
         $('.total-harga').empty();
         $.each(data, function(key, value) {
           $('.data-barang').append('<tr><td><button type="button" class="btn btn-danger btn-sm" onclick="DeleteFunction(' + value['id'] + ')">Delete</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td>' + value['quantity'] + '</td><td>' + commaSeparateNumber(value['harga']) + '</td></tr>')
-          $('.input-submit').append('<input name="id_pemesanan" value="'+value['pemesanan_id']+'" hidden>');
+          $('.input-submit').append('<input name="id_pemesanan" value="' + value['pemesanan_id'] + '" hidden>');
           total_harga += value['harga'];
         });
         $('.total-harga').html(commaSeparateNumber(total_harga));
-        $('.input-submit').append('<input name="total_harga" value="'+total_harga+'" hidden>')
+        $('.input-submit').append('<input name="total_harga" value="' + total_harga + '" hidden>')
       },
       error: function(data) {
         console.log('Error:', data);
