@@ -13,6 +13,6 @@ class Pemesanan extends Model
 
     protected $table = 'pemesanan';
     protected $fillable = [
-        'kode_pemesanan', 'tgl-pemesanan', 'total_harga', 'status'
+        'supplier_id','kode_pemesanan', 'tgl-pemesanan', 'total_harga', 'status'
     ];
 }

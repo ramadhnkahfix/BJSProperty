@@ -51,6 +51,7 @@
                         <tr>
                             <th>No</th>
                             <th>Kode Pemesanan</th>
+                            <th>Nama Suplier</th>
                             <th>Tanggal Pemesanan</th>
                             <th>Total Harga</th>
                             <th>Aksi </th>
@@ -61,6 +62,7 @@
                         <tr>
                             <td>{{ $num++ }}</td>
                             <td>{{$data->kode_pemesanan}}</td>
+                            <td>{{$data->nama_suplier}}</td>
                             <td>{{date('d F Y', strtotime($data->tgl_pemesanan))}}</td>
                             <td>{{number_format($data->total_harga)}}</td>
                             <td>

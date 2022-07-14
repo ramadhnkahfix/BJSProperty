@@ -30,7 +30,14 @@
   <?php
   $num = 1;
   ?>
-
+  @if(session('success'))
+  <div class="sufee-alert alert with-close alert-success alert-dismissible fade show mx-5 mt-2 mb-0">
+    {{session('success')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
   <div class="card-body">
     <div class="card-body">
       <div class="card">
@@ -46,6 +53,7 @@
                 <th style="width: 10px">No</th>
                 <th>Kode Pemesanan</th>
                 <th>Tanggal Penerimaan </th>
+                <th>Total Harga</th>
                 <th>Bukti Penerimaan</th>
                 <th>Catatan </th>
                 <th>Aksi </th>
@@ -57,14 +65,18 @@
                 <td>{{ $num++ }}</td>
                 <td>{{$data->kode_pemesanan}}</td>
                 <td>{{date('d F Y', strtotime($data->tgl_penerimaan))}}</td>
+                <td>{{$data->total_harga}}</td>
                 <td align="center">
                   <a href="{{ url('bukti/'. $data->bukti ) }}" target="_blank" rel="noopener noreferrer">Lihat Gambar</a>
                 </td>
                 <td>{{$data->catatan}}</td>
 
                 <td>
-                  <a href='/penerimaan/editpenerimaan/{{ $data->id_penerimaan }}' class="btn btn-primary">
+                  <a href='/penerimaan/detail/{{ $data->id_penerimaan }}' class="btn btn-outline-primary btn-sm">
                     <i class="fas fa-eye"></i> Detail</button>
+                  </a>
+                  <a href='/penerimaan/editpenerimaan/{{ $data->id_penerimaan }}' class="btn btn-primary btn-sm ">
+                    <i class="fas fa-edit"></i> Edit</button>
                   </a>
                 </td>
               </tr>

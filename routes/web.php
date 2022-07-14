@@ -63,7 +63,9 @@ Route::group(['middleware' => ['auth', 'checkRole:pemilik']], function () {
 
     Route::get('/penerimaan', [PenerimaanController::class, 'index']);
     Route::get('/penerimaan/addpenerimaan', [PenerimaanController::class, 'insertPenerimaan']);
+    Route::get('/penerimaan/detail/{id}',[PenerimaanController::class, 'show']);
     Route::get('/getDetailPemesanan/{id}',[PenerimaanController::class,'getDetailPemesanan']);
+    Route::patch('/penerimaan/update/{id}',[PenerimaanController::class,'validatePenerimaan']);
     Route::post('/penerimaan/addpenerimaan', [PenerimaanController::class, 'tambahPenerimaan']);
     Route::get('/penerimaan/editpenerimaan/{id_penerimaan}', [PenerimaanController::class, 'editPenerimaan']);
     Route::post('/penerimaan/updatepenerimaan/{id}', [PenerimaanController::class, 'updatePenerimaan'])->name('edit.penerimaan');

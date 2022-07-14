@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>LAPORAN</title>
+    <title>Nota Pemesanan</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -62,7 +62,7 @@
             <section class="invoice">
                 <!-- title row -->
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-10">
                         <h2 class="page-header">
                             <i class="fa fa-globe"></i> Nota Pemesanan
                         </h2>
@@ -71,7 +71,6 @@
                             <small>{{date('d F Y', strtotime($pemesanan->tgl_pemesanan))}}</small>
                         </p>
                     </div>
-                    <!-- /.col -->
                 </div>
                 <!-- info row -->
                 <!-- /.row -->
@@ -79,37 +78,35 @@
                 <!-- Table row -->
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
+                        <h5>{{$pemesanan->nama_suplier}}</h5>
+                        <p>
+                            <small>{{$pemesanan->alamat_suplier}}</small>
+                        </p>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Suplier</th>
                                     <th>Nama Barang </th>
                                     <th>Quantity</th>
                                     <th>Harga</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?php
                                 $no = 1;
-                                $total_harga = 0; 
+                                $total_harga = 0;
                                 ?>
                                 @foreach ($detail_pemesanan as $data)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>
-                                        <b>{{$data->nama_suplier}}</b>
-                                        <p>Alamat :</p>
-                                        <p><b>{{$data->alamat_suplier}}</b></p>
-                                    </td>
                                     <td>{{$data->nama_barang}}</td>
                                     <td>{{$data->quantity}}</td>
                                     <td>{{$data->harga}}</td>
                                 </tr>
                                 <?php $total_harga += $data->harga ?>
-                                @endforeach                                
+                                @endforeach
                                 <tr>
-                                    <td colspan="4" align="right">Total Harga</td>
+                                    <td colspan="3" align="right">Total Harga</td>
                                     <td>{{$total_harga}}</td>
                                 </tr>
                             </tbody>
@@ -127,4 +124,4 @@
         <!-- ./wrapper -->
     </body>
 
-</html>
+    </html>

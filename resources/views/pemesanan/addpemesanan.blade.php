@@ -270,7 +270,8 @@
             total_harga += value['harga'];
           });
           $('.total-harga').html(commaSeparateNumber(total_harga));
-          $('.input-submit').append('<input name="total_harga" value="' + total_harga + '" hidden>')
+          $('.input-submit').append('<input name="total_harga" value="' + total_harga + '" hidden>');
+          // $('select[name="supplier"]').
           $('tfoot tr:last').removeAttr('hidden');
         },
         error: function(data) {

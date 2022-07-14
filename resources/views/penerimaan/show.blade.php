@@ -1,13 +1,13 @@
 @extends("layout.mainlayout")
 
-@section("page_title","Detail Pemesanan")
+@section("page_title","Detail Penerimaan")
 
-@section("title","Detail Pemesanan")
+@section("title","Detail Penerimaan")
 
 @section("breadcrumb")
 <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-<li class="breadcrumb-item"><a href="/pemesanan">Pemesanan</a></li>
-<li class="breadcrumb-item active">Detail Pemesanan</li>
+<li class="breadcrumb-item"><a href="/penerimaan">Penerimaan</a></li>
+<li class="breadcrumb-item active">Detail Penerimaan</li>
 @endsection
 
 @section('custom_css')
@@ -20,17 +20,13 @@
 <!-- Default box -->
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title"> DATA DETAIL PEMESANAN</h3>
+        <h3 class="card-title"> DATA DETAIL PENERIMAAN</h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                 <i class="fas fa-minus"></i></button>
             <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
                 <i class="fas fa-times"></i></button>
         </div>
-    </div>
-    <div class="card-header">
-        <h5>Kode Pemesanan : {{$pemesanan->kode_pemesanan}}</h5>
-        <h5>Suplier : {{$pemesanan->nama_suplier}}</h5>
     </div>
     <div class="card-body">
         <div class="card-body">
@@ -41,27 +37,20 @@
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Nama Barang</th>
-                                <th>Quantity</th>
-                                <th>Harga</th>
+                                <th>Jml Barang Diterima</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $num = 1;
-                            $total_harga = 0;
-                            ?>
-                            @foreach($detail_pemesanan as $data)
+                            <?php $num=1; ?>
+                            @foreach($detail_penerimaan as $data)
                             <tr>
                                 <td>{{ $num++ }}</td>
                                 <td>{{$data->nama_barang}}</td>
                                 <td>{{$data->quantity}}</td>
-                                <td>{{number_format($data->harga)}}</td>
                             </tr>
-                            <?php $total_harga += $data->harga ?>
                             @endforeach
                             <tr>
-                                <td colspan="3" align="right">Total Harga</td>
-                                <td>{{$total_harga}}</td>
+                                <td colspan="3" align="left">Total Harga : {{$penerimaan->total_harga}}</td>
                             </tr>
                         </tbody>
 
@@ -72,7 +61,7 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-        <a href="/pemesanan" class="btn btn-outline-primary btn-sm">Kembali</a>
+        <a href="/penerimaan" class="btn btn-outline-primary btn-sm">Kembali</a>
     </div>
     <!-- /.card-body -->
     <div class="card-footer">

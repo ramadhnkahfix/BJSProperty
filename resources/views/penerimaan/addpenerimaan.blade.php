@@ -57,6 +57,7 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Nomor</th>
                                     <th>Nama Barang</th>
                                     <th>Jumlah Barang Diterima</th>
@@ -110,26 +111,44 @@
                         total_harga = 0;
                         $('.data-pemesanan').empty();
                         $.each(data, function(key, value) {
-                            $('.data-pemesanan').append('<tr><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td><input name="quantity" class="form-control form-control-border" value="'+value['quantity']+'"></td></tr>')
+                            $('.data-pemesanan').append('<tr><td><button type="button" class="btn btn-warning btn-sm" onclick="UpdateFunction(' + value['id'] + ')">Checked</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td><div class="qty"><input name="quantity" class="form-control form-control-border" value="' + value['quantity'] + '"></div></td></tr>')
                             total_harga += value['harga'];
                         });
                     },
-                    error: function(data){
+                    error: function(data) {
                         console.log(data);
-                    },  
+                    },
                 });
             } else {
                 $('.data-pemesanan').empty();
             }
         });
-
-        // Post Data
-        // $('#buttonSubmit').on('click',function(){
-        //     let tgl = $('input[name="tgl_pemesanan"]').val();
-        //     let 
-        // });
     });
 
+    // Validation
+    function UpdateFunction(id) {
+
+        let token = $('meta[name="csrf-token"]').attr('content');
+        let qty = $('input[name="quantity"]').val();
+        jQuery.ajax({
+            url: "/penerimaan/update/" + id,
+            dataType: "JSON",
+            type: "patch",
+            data: {
+                _token: token,
+                id: id,
+                quantity:qty
+            },
+            success: function(data) {
+                console.log(data);
+                alert('Berhasil di Update');
+            },
+            error: function(data) {
+                console.log('Error:', data);
+                alert('Something Wrong');
+            }
+        });
+    }
     // Number Format
     function commaSeparateNumber(val) {
         // remove sign if negative
