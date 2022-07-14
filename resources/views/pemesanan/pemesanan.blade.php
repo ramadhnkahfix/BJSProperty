@@ -61,7 +61,7 @@
                         <tr>
                             <td>{{ $num++ }}</td>
                             <td>{{$data->kode_pemesanan}}</td>
-                            <td>{{$data->tgl_pemesanan}}</td>
+                            <td>{{date('d F Y', strtotime($data->tgl_pemesanan))}}</td>
                             <td>{{number_format($data->total_harga)}}</td>
                             <td>
                                 <a href='/pemesanan/cetak-nota/{{ $data->id }}' target="_blank" class="btn btn-info">
