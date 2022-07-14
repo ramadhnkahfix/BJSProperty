@@ -25,10 +25,12 @@ class PembayaranController extends Controller
     public function insertPembayaran()
     {
         $pembayaran = DB::table('pembayaran')->get();
+        $penerimaan = DB::table('penerimaan')->where('status',1)->get();
         $data = array(
             'menu' => 'pembayaran',
             'submenu' => 'pembayaran',
             'pembayaran' => $pembayaran,
+            'penerimaan' => $penerimaan
         );
 
         return view('pembayaran/addpembayaran',$data); 
@@ -41,12 +43,14 @@ class PembayaranController extends Controller
             'total_pembayaran' => 'required',
             'bukti_pembayaran' => 'required|mimes:pdf,doc,docx,jpg,jpeg,bmp,png',         
             'status_pembayaran' => 'required',
+            'penerimaan' => 'required'
             
         ], [
             'tgl_pembayaran.required' =>'wajib diisi',
             'total_pembayaran.required' =>'wajib diisi',
             'bukti_pembayaran.required' =>'wajib diisi',
             'status_pembayaran.required' =>'wajib diisi',
+            'penerimaan.required' =>'wajib diisi',
             
         ]);
         
@@ -56,6 +60,7 @@ class PembayaranController extends Controller
         $file->move(public_path('bukti_pembayaran'), $fileName);
 
         DB::table('pembayaran')->insert([
+            'penerimaan_id'=>$post->penerimaan,
             'tgl_pembayaran' => $post->tgl_pembayaran,
             'total_pembayaran' => $post->total_pembayaran,
             'bukti_pembayaran' => $fileName,

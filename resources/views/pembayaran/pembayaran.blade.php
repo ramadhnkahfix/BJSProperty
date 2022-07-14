@@ -45,6 +45,7 @@
                     <tr>
                       <th style="width: 10px">No</th>
                       <th>Tanggal Pembayaran </th>
+                      <th>Penerimaan</th>
                       <th>Total Pembayaran</th>
                       <th>Bukti Pembayaran </th>
                       <th>Status Pembayaran </th>
@@ -55,6 +56,7 @@
                   @foreach($pembayaran as $data)     
                       <tr> 
                         <td>{{ $num++ }}</td>
+                        <td>{{$data->id_penerimaan}}</td>
                         <td>{{$data->tgl_pembayaran}}</td> 
                          <td>{{$data->total_pembayaran}}</td>
                          <td align="center">
