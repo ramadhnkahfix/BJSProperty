@@ -136,9 +136,8 @@ class PemesananController extends Controller
     public function show($id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
-        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'suplier.nama_suplier', 'suplier.alamat_suplier')
+        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang')
             ->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
-            ->join('suplier', 'suplier.id_suplier', '=', 'detail_pemesanans.suplier_id')
             ->where('pemesanan_id', $id)->where('deleted_at', null)->get();
         $data = array(
             'menu' => 'pemesanan',

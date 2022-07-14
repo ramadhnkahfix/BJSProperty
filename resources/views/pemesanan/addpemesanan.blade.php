@@ -241,7 +241,7 @@
       let token = $('meta[name="csrf-token"]').attr('content');
       let kode_pemesanan = $('input[name="kode_pemesanan"]').val();
       let tgl = $('input[name="tgl_penerimaan"]').val();
-      let supplier = $('input[name="supplier"]').val();
+      let supplier = $('select[name="supplier"]').val();
       let nama_barang = $('select[name="nama_barang"]').val();
       let qty = $('input[name="jml_barang"]').val();
       let harga = $('input[name="harga_barang"]').val();
