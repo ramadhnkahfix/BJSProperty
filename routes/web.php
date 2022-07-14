@@ -29,7 +29,7 @@ Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'postLogin'])->name('postlogin');
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::group(['middleware' => ['checkRole:pemilik,gudang,kasir']], function () {
+Route::group(['middleware' => ['auth','checkRole:pemilik,gudang,kasir']], function () {
     Route::get('/', function () {
         $data = array(
             'menu' => 'MasterTambahData',
