@@ -72,15 +72,21 @@ class PenerimaanController extends Controller
     public function validatePenerimaan(Request $request, $id)
     {
         $detail_penerimaan = DetailPenerimaan::findOrFail($id);
+        $barang = DB::table('barang')->where('id_barang',$detail_penerimaan->barang_id)->first();
         $detail_penerimaan->update([
-            'quantity' => $request->quantity
+            'quantity' => $request->quantity,
+            'harga'=> $barang->harga_barang * $request->quantity
         ]);
+        $detail_penerimaan = DetailPenerimaan::findOrFail($id);
         return json_encode($detail_penerimaan);
     }
 
     public function tambahPenerimaan(Request $post)
     {
         $pemesanan = Pemesanan::findOrFail($post->kode_pemesanan);
+        $pemesanan->update([
+            'status' => '2'
+        ]);
         //upload gambar/bukti
         $file = Request()->bukti;
         $fileName = $file->getClientOriginalName();
@@ -90,19 +96,23 @@ class PenerimaanController extends Controller
             'tgl_penerimaan' => date('Y-m-d'),
             'bukti' => $fileName,
             'catatan' => $post->catatan,
-            'total_harga' => $pemesanan->total_harga,
             'status' => 1
         ]);
-        $penerimaan = DB::table('penerimaan')->orderBy('id_penerimaan','desc')->first();
+        $penerimaan = DB::table('penerimaan')->where('pemesanan_id',$pemesanan->id)->first();
         $detail_penerimaan = DetailPenerimaan::where('penerimaan_id',$penerimaan->id_penerimaan)->get();
+        $total_harga = 0;
         foreach($detail_penerimaan as $data){
+            // Update Nambah Barang
             $barang = DB::table('barang')->where('id_barang',$data->barang_id)->first();
             DB::table('barang')->where('id_barang',$data->barang_id)->update([
                 'jml_barang' => $barang->jml_barang + $data->quantity
             ]);
+            // Total Harga
+            $total_harga += $data->harga;
         }
-
-
+        DB::table('penerimaan')->where('id_penerimaan',$penerimaan->id_penerimaan)->update([
+            'total_harga'=>$total_harga
+        ]);
 
         return redirect('/penerimaan')->with('success', 'Data Pemesanan Berhasil di Tambahkan');
     }
@@ -154,7 +164,7 @@ class PenerimaanController extends Controller
 
     public function cetakForm()
     {
-        $penerimaan = DB::table('penerimaan')->get();
+        $penerimaan = DB::table('penerimaan')->where('status','1')->get();
         $data = array(
             'menu' => 'penerimaan',
             'submenu' => 'penerimaan',
@@ -166,7 +176,7 @@ class PenerimaanController extends Controller
     public function cetakPenerimaanPertanggal($tglawal, $tglakhir)
     {
         // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
-        $cetakpertanggal = DB::table('penerimaan')->whereBetween('tgl_penerimaan', [$tglawal, $tglakhir])->get();
+        $cetakpertanggal = DB::table('penerimaan')->where('status','1')->whereBetween('tgl_penerimaan', [$tglawal, $tglakhir])->get();
         return view('penerimaan/cetak-penerimaan-pertanggal', compact('cetakpertanggal'));
     }
 }

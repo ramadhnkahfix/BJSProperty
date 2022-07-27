@@ -51,18 +51,20 @@
                             <select class="custom-select form-control-border" name="penerimaan">
                                 <option readonly> -- Pilih Penerimaan -- </option>
                                 @foreach($penerimaan as $data)
-                                <option value="{{$data->id_penerimaan}}">{{$data->id_penerimaan}}</option>
+                                <option value="{{$data->id_penerimaan}}">{{$data->kode_penerimaan}}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label>Total Pembayaran</label>
-                            <input name="total_pembayaran" class="form-control" value="{{old('total_pembayaran') }}">
-                            <div class="text-danger">
-                                @error('total_pembayaran')
-                                {{ $message }}
-                                @enderror
+                            <div class="total_pembayaran">
+                                <input name="total_pembayaran" class="form-control" value="{{old('total_pembayaran') }}" readonly>
+                                <div class="text-danger">
+                                    @error('total_pembayaran')
+                                    {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
 
@@ -90,22 +92,53 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="hutang">
 
-
-
-
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
-
         </form>
-
     </div>
-    <!-- /.card-body -->
+</div>
+@endsection
 
-    <div class="card-footer">
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        // Get Harga
+        $('select[name="penerimaan"]').on('change', function() {
+            let id = $(this).val();
+            if (id) {
+                jQuery.ajax({
+                    url: '/getPenerimaan/' + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        console.log(data);
+                        $('.total_pembayaran').empty();
+                        $.each(data, function(key, value) {
+                            $('.total_pembayaran').append('<input type="number" name="total_pembayaran" class="form-control" value="' + value['total_harga'] + '" readonly>');
+                        });
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    },
+                });
+            } else {
+                console.log(id);
+            }
+        });
 
-    </div>
-    <!-- /.card-footer-->
-    <!-- </div> -->
-    <!-- </div> -->
-    <!-- /.card -->
-    @endsection
+        // Hutang
+        $('select[name="status_pembayaran"]').on('change', function() {
+            let status = $(this).val();
+            if (status == 1) {
+                $('.hutang').append('<label>Jumlah Di Bayarkan</label><input type="number" name="bayar" class="form-control" required>');
+            } else {
+                $('.hutang').empty();
+            }
+        });
+    });
+</script>
+@endsection

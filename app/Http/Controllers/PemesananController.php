@@ -135,9 +135,12 @@ class PemesananController extends Controller
         ]);
         $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
             ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();
+        $kode_penerimaan = "TRM" . date('dmY') . rand(0, 999);
         DB::table('penerimaan')->insert([
             'pemesanan_id' => $pemesanan->id,
+            'kode_penerimaan'=>$kode_penerimaan,
             'status' => 0,
+            'is_pay'=>0
         ]);
         $penerimaan = DB::table('penerimaan')->orderBy('id_penerimaan', 'desc')->first();
         foreach ($detail_pemesanan as $data) {
@@ -208,27 +211,12 @@ class PemesananController extends Controller
 
     public function cetakForm()
     {
-        $pemesanan = Pemesanan::select('pemesanan.*', 'suplier.nama_suplier','suplier.alamat_suplier')
-        ->join('suplier', 'suplier.id_suplier', '=', 'pemesanan.supplier_id')
-        ->where('status', 1)->get();
-        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
-            ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();
+        $pemesanan = Pemesanan::where('status','!=','0')->get();
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
             'pemesanan' => $pemesanan,
-            'detail_pemesanan' => $detail_pemesanan
-        );
-        return view('pemesanan/cetak-pemesanan-form', $data);
-    }
 
-    public function cetakForm1()
-    {
-        $pemesanan = DB::table('pemesanan')->get();
-        $data = array(
-            'menu' => 'pemesanan',
-            'submenu' => 'pemesanan',
-            'pemesanan' => $pemesanan,
         );
         return view('pemesanan/cetak-pemesanan-form', $data);
     }
@@ -236,14 +224,7 @@ class PemesananController extends Controller
     public function cetakPemesananPertanggal($tglawal, $tglakhir)
     {
         // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
-        $cetakpertanggal = DB::table('pemesanan')->whereBetween('tgl_pemesanan', [$tglawal, $tglakhir])->get();
+        $cetakpertanggal = Pemesanan::where('status','1')->whereBetween('tgl_pemesanan', [$tglawal, $tglakhir])->get();
         return view('pemesanan/cetak-pemesanan-pertanggal', compact('cetakpertanggal'));
     }
-
-    public function export_excel($tglawal, $tglakhir)
-    {
-        $exportexcel = DB::table('pemesanan')->whereBetween('tgl_pemesanan', [$tglawal, $tglakhir])->get();
-        return view('pemesanan/export-excel', compact('exportexcel'));
-    }
-
 }

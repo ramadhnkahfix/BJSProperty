@@ -64,7 +64,8 @@
                                     <th></th>
                                     <th>Nomor</th>
                                     <th>Nama Barang</th>
-                                    <th>Jumlah Barang Diterima</th>
+                                    <th>Jumlah Barang Diterima</th>'
+                                    <th>Harga Barang</th>
                                 </tr>
                             </thead>
                             <tbody class="data-pemesanan">
@@ -115,7 +116,7 @@
                         total_harga = 0;
                         $('.data-pemesanan').empty();
                         $.each(data, function(key, value) {
-                            $('.data-pemesanan').append('<tr><td><button type="button" class="btn btn-warning btn-sm" onclick="UpdateFunction(' + value['id'] + ')">Checked</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td><div class="qty"><input name="quantity" class="form-control form-control-border" value="' + value['quantity'] + '"></div></td></tr>')
+                            $('.data-pemesanan').append('<tr><td><button type="button" class="btn btn-warning btn-sm" onclick="UpdateFunction(' + value['id'] + ')">Checked</button></td><td> Barang ke-' + num++ + '</td><td>' + value['nama_barang'] + '</td><td><div class="qty"><input name="quantity" id="qty'+value['id']+'" class="form-control form-control-border" value="' + value['quantity'] + '"></div></td><td id="harga'+value['id']+'">'+value['harga']+'</td></tr>')
                             total_harga += value['harga'];
                         });
                     },
@@ -133,7 +134,7 @@
     function UpdateFunction(id) {
 
         let token = $('meta[name="csrf-token"]').attr('content');
-        let qty = $('input[name="quantity"]').val();
+        let qty = $('#qty'+id+'').val();
         jQuery.ajax({
             url: "/penerimaan/update/" + id,
             dataType: "JSON",
@@ -141,10 +142,12 @@
             data: {
                 _token: token,
                 id: id,
-                quantity:qty
+                quantity: qty
             },
             success: function(data) {
                 console.log(data);
+                $('#qty'+data['id']+'').attr('readonly', true);
+                $('#harga'+data['id']+'').html(data['harga']);
                 alert('Berhasil di Update');
             },
             error: function(data) {

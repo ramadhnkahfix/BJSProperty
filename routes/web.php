@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth', 'checkRole:pemilik']], function () {
     Route::get('/pemesanan/cetak-nota/{id}', [PemesananController::class, 'cetakNota']);
     Route::patch('/pemesanan/delete/{id}', [PemesananController::class, 'delete']);
     Route::get('/pemesanan/hapus/{id_pemesanan}', [PemesananController::class, 'hapus']);
-    Route::get('/pemesanan/cetak-pemesanan-form', [PemesananController::class, 'cetakForm1']);
+    Route::get('/pemesanan/cetak-pemesanan-form', [PemesananController::class, 'cetakForm']);
     Route::get('/pemesanan/cetakPemesananPertanggal/{tglawal}/{tglakhir}', [PemesananController::class, 'cetakPemesananPertanggal']);
 
     Route::get('/penerimaan', [PenerimaanController::class, 'index']);
@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth', 'checkRole:pemilik']], function () {
 
     Route::get('/pembayaran', [PembayaranController::class, 'index']);
     Route::get('/pembayaran/addpembayaran', [PembayaranController::class, 'insertPembayaran']);
+    Route::get('/getPenerimaan/{id}', [PembayaranController::class,'getPenerimaan']);
     Route::post('/pembayaran/addpembayaran', [PembayaranController::class, 'tambahPembayaran']);
     Route::get('/pembayaran/editpembayaran/{id_pembayaran}', [PembayaranController::class, 'editPembayaran']);
     Route::post('/pembayaran/updatepembayaran/{id}', [PembayaranController::class, 'updatePembayaran'])->name('edit.pembayaran');

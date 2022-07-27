@@ -41,8 +41,8 @@
 
                 <div class="input-group mb-3">
                     <a href="" onclick="this.href='/penerimaan/cetakPenerimaanPertanggal/'+ document.getElementById('tglawal').value +
-                    '/' + document.getElementById('tglakhir').value " target="_blank" class="btn btn-primary col-md-12">
-                        Cetak Laporan <i class="fas fa-print"></i>
+                    '/' + document.getElementById('tglakhir').value " target="_blank" class="btn btn-danger col-md-12">
+                        Cetak Laporan PDF <i class="fas fa-print"></i>
                     </a>
                 </div>
 		    </div>

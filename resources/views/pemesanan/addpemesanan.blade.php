@@ -13,6 +13,7 @@
 <!-- DataTables -->
 <link rel="stylesheet" href="{{asset ('asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset ('asset/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset ('asset/plugins/select2/css/select2.min.css')}}">
 @endsection
 
 @section('content')
@@ -42,12 +43,13 @@
           <div class="card-body">
             <div class="form-group">
               <label>Nama Barang</label>
-              <select class="custom-select form-control-border" name="nama_barang" required>
-                <option readonly>-- Pilih Barang --</option>
-                @foreach($barang as $data)
-                <option value="{{$data->id_barang}}">{{$data->nama_barang}}</option>
-                @endforeach
-              </select>
+              <div class="select2-purple">
+                <select class="select2" name="nama_barang" data-placeholder="Select a Technician" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                  @foreach($barang as $data)
+                  <option value="{{$data->id_barang}}">{{$data->nama_barang}}</option>
+                  @endforeach
+                </select>
+              </div>
             </div>
             <div class="form-group">
               <label>Jumlah Barang</label>
@@ -93,10 +95,12 @@
             </div>
             <div class="form-group">
               <label>Supplier</label>
-              <select class="custom-select form-control-border" name="supplier">
-                <option readonly>--Pilih Supplier--</option>
-              </select>
-              <p class="small-text"><small style="color: red;"> *pilih barang terlebih dahulu</small></p>
+              <div class="select2-purple">
+                <select class="select2" name="supplier" data-placeholder="Select a Technician" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                  <option readonly>--Pilih Supplier--</option>
+                </select>
+                <p class="small-text"><small style="color: red;"> *pilih barang terlebih dahulu</small></p>
+              </div>
             </div>
             <!-- /.card-body -->
           </div>
@@ -153,9 +157,6 @@
 </div>
 <!-- /.card -->
 
-
-
-
 <div class="modal fade" id="deletepemesanan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -182,7 +183,17 @@
 
 
 @section('scripts')
+<script src="{{asset ('asset/plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
+  $(function() {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+  });
+
   function confirmDelete(id) {
     var link = document.getElementById('deleteLink')
     link.href = "/pemesanan/hapus/" + id
