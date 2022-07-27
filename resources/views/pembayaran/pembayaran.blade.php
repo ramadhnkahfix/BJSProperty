@@ -6,7 +6,7 @@
 
 @section("breadcrumb")
 <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-<li class="breadcrumb-item active">Pembayaran</li> 
+<li class="breadcrumb-item active">Pembayaran</li>
 @endsection
 
 @section('custom_css')
@@ -17,83 +17,103 @@
 
 @section('content')
 <!-- Default box -->
-<div class="card">    
+<div class="card">
   <div class="card-header">
-	  <h3 class="card-title"> DATA PEMBAYARAN</h3>
-	  <div class="card-tools">
-		  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-			<i class="fas fa-minus"></i></button>
-		  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-			<i class="fas fa-times"></i></button>
-	  </div>
+    <h3 class="card-title"> DATA PEMBAYARAN</h3>
+    <div class="card-tools">
+      <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+        <i class="fas fa-minus"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+        <i class="fas fa-times"></i></button>
+    </div>
   </div>
   <?php
-        $num = 1;
-      ?>
+  $num = 1;
+  ?>
 
   <div class="card-body">
-  <div class="card-body">
-    <div class="card">
-			<div class="card-header">
-				<a href="/pembayaran/addpembayaran">
-				<button type="button" class="btn btn-info float-right" style="float: right;"><i class="fas fa-plus"></i>  Tambah Data</button>
-				</a>
-			</div>
-      <div class="card-body">
-      <table class="table table-bordered">
-                  <thead>                  
-                    <tr>
-                      <th style="width: 10px">No</th>
-                      <th>Tanggal Pembayaran </th>
-                      <th>Penerimaan</th>
-                      <th>Total Pembayaran</th>
-                      <th>Bukti Pembayaran </th>
-                      <th>Status Pembayaran </th>
-                      <th>Aksi </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  @foreach($pembayaran as $data)     
-                      <tr> 
-                        <td>{{ $num++ }}</td>
-                        <td>{{$data->id_penerimaan}}</td>
-                        <td>{{$data->tgl_pembayaran}}</td> 
-                         <td>{{$data->total_pembayaran}}</td>
-                         <td align="center">
-                          <a href="{{ url('bukti_pembayaran/'.$data->bukti_pembayaran) }}"><button class="
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header">
+          <a href="/pembayaran/addpembayaran">
+            <button type="button" class="btn btn-info float-right" style="float: right;"><i class="fas fa-plus"></i> Tambah Data</button>
+          </a>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="width: 10px">No</th>
+                <th>Kode Penerimaan</th>
+                <th>Tanggal Pembayaran </th>
+                <th>Total Pembayaran</th>
+                <th>Bukti Pembayaran </th>
+                <th>Hutang </th>
+                <th>Aksi </th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($pembayarandp as $data)
+              <tr>
+                <td>{{ $num++ }}</td>
+                <td>{{$data->kode_penerimaan}}</td>
+                <td>{{$data->tgl_pembayaran}}</td>
+                <td>{{$data->total_pembayaran}}</td>
+                <td align="center">
+                  <a href="{{ url('bukti_pembayaran/'.$data->bukti_pembayaran) }}"><button class="
                           btn btn-success" type="button">Download</button></a>
-                         </td>
-                         <td>
-                            @if ($data->status_pembayaran==0)
-                                    Lunas
-                                    @else
-                                      @if ($data->status_pembayaran==1) 
-                                        DP
-                                    @endif 
-                                  @endif
-                            </td>
-                         <td>
-
-                         <a href='/pembayaran/editpembayaran/{{ $data->id_pembayaran }}' class="btn btn-primary"> 
-                            <i class="fas fa-edit"></i> Edit</button>
-                            </a>
-
-                          <button onclick="confirmDelete('{{ $data->id_pembayaran }}')" class="btn btn-danger">
-                          <i class="fas fa-trash"></i> Hapus</button>
-                          </td>
-                      </tr> 
-                  @endforeach
-
-                  </tbody>
-
-                  
-                </table>
+                </td>
+                <td>{{$data->hutang}}</td>
+                <td>
+                  <a href='/pembayaran/editpembayaran/{{ $data->id_pembayaran }}' class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit</button>
+                  </a>
+                  <!-- <button onclick="confirmDelete('{{ $data->id_pembayaran }}')" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Hapus</button> -->
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+          <table class="table table-bordered mt-5">
+            <thead>
+              <tr>
+                <th style="width: 10px">No</th>
+                <th>Kode Penerimaan</th>
+                <th>Tanggal Pembayaran </th>
+                <th>Total Pembayaran</th>
+                <th>Bukti Pembayaran </th>
+                <th>Aksi </th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($pembayaran as $data)
+              <tr>
+                <td>{{ $num++ }}</td>
+                <td>{{$data->kode_penerimaan}}</td>
+                <td>{{$data->tgl_pembayaran}}</td>
+                <td>{{$data->total_pembayaran}}</td>
+                <td align="center">
+                  <a href="{{ url('bukti_pembayaran/'.$data->bukti_pembayaran) }}"><button class="
+                          btn btn-success" type="button">Download</button></a>
+                </td>
+                <td>
+                  <!-- <a href='/pembayaran/editpembayaran/{{ $data->id_pembayaran }}' class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit</button>
+                  </a> -->
+                  <button onclick="confirmDelete('{{ $data->id_pembayaran }}')" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Hapus</button>
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-			<!-- /.card-body -->
-		</div>
-		<!-- /.card -->
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
   </div>
   <!-- /.card-body -->
   <div class="card-footer">
@@ -110,18 +130,18 @@
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">Hapus Data</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
         Apakah anda yakin ingin mengahpus data ini?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-		<a id="deleteLink">
-		<button type="button" class="btn btn-danger">Hapus</button>
-		</a>
-	</div>
+        <a id="deleteLink">
+          <button type="button" class="btn btn-danger">Hapus</button>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -137,24 +157,21 @@
 <script src="{{asset ('asset/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 
 <script>
-  $(function () {
-	$("#example1").DataTable({
-	  "responsive": true,
-	  "autoWidth": false,
-	});
+  $(function() {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+    });
   });
 </script>
 @endsection
 
 @section('scripts')
 <script>
-	function confirmDelete(id)
-	{
-		var link = document.getElementById('deleteLink')
-		link.href="/pembayaran/hapus/" + id
-		$('#deletepembayaran').modal('show')
-	}
-
-
+  function confirmDelete(id) {
+    var link = document.getElementById('deleteLink')
+    link.href = "/pembayaran/hapus/" + id
+    $('#deletepembayaran').modal('show')
+  }
 </script>
 @endsection

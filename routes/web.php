@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth', 'checkRole:pemilik']], function () {
 
     Route::get('/pembayaran', [PembayaranController::class, 'index']);
     Route::get('/pembayaran/addpembayaran', [PembayaranController::class, 'insertPembayaran']);
+    Route::get('/getPenerimaan/{id}', [PembayaranController::class,'getPenerimaan']);
     Route::post('/pembayaran/addpembayaran', [PembayaranController::class, 'tambahPembayaran']);
     Route::get('/pembayaran/editpembayaran/{id_pembayaran}', [PembayaranController::class, 'editPembayaran']);
     Route::post('/pembayaran/updatepembayaran/{id}', [PembayaranController::class, 'updatePembayaran'])->name('edit.pembayaran');

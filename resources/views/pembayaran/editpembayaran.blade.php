@@ -11,7 +11,8 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>Penerimaan</label>
-                    <input type="number" name="penerimaan_id" class="form-control" value="{{$pembayaran->penerimaan_id}}" readonly>
+                    <input type="text" name="penerimaan_id" value="{{$pembayaran->penerimaan_id}}" hidden>
+                    <input type="text" name="kode_penerimaan" class="form-control" value="{{$pembayaran->kode_penerimaan}}" readonly>
                 </div>
 
                 <div class="form-group">
@@ -26,7 +27,7 @@
 
                 <div class="form-group">
                     <label>Total Pembayaran</label>
-                    <input name="total_pembayaran" class="form-control" value="{{$pembayaran->total_pembayaran}}">
+                    <input name="total_pembayaran" class="form-control" value="{{$pembayaran->total_pembayaran}}" readonly>
                     <div class="text-danger">
                         @error('total_pembayaran')
                         {{ $message }}
@@ -52,20 +53,37 @@
                     </label>
                     <div class="col-sm-14">
                         <select name="status_pembayaran" class="form-control">
-                            <option value="{{$pembayaran->status_pembayaran}}">-Pilih-</option>
+                            <option value="{{$pembayaran->status_pembayaran}}" selected disabled>DP</option>
                             <option @if(old('status_pembayaran')=='0' ) selected @endif value="0">Lunas</option>
-                            <option @if(old('status_pembayaran')=='1' ) selected @endif value="1">DP</option>
                         </select>
                     </div>
                 </div>
-
-
+                <div class="form-group">
+                    <div class="hutang">
+                        <label for="">Hutang</label>
+                        <input type="text" class="form-control" value="{{$pembayaran->hutang}}">
+                    </div>
+                </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
                 </div>
             </div>
         </div>
-
-
 </form>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        // Hutang
+        $('select[name="status_pembayaran"]').on('change', function() {
+            let status = $(this).val();
+            if (status == 1) {
+                $('.hutang').append('<label>Jumlah Di Bayarkan</label><input type="number" name="bayar" class="form-control" required>');
+            } else {
+                $('.hutang').empty();
+            }
+        });
+    });
+</script>
 @endsection

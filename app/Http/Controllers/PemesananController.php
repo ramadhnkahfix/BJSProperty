@@ -135,9 +135,12 @@ class PemesananController extends Controller
         ]);
         $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
             ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();
+        $kode_penerimaan = "TRM" . date('dmY') . rand(0, 999);
         DB::table('penerimaan')->insert([
             'pemesanan_id' => $pemesanan->id,
+            'kode_penerimaan'=>$kode_penerimaan,
             'status' => 0,
+            'is_pay'=>0
         ]);
         $penerimaan = DB::table('penerimaan')->orderBy('id_penerimaan', 'desc')->first();
         foreach ($detail_pemesanan as $data) {
