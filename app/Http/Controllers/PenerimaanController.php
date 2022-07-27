@@ -48,11 +48,13 @@ class PenerimaanController extends Controller
     {
         $penerimaan = DB::table('penerimaan')->get();
         $pemesanan = Pemesanan::where('status', 1)->orderBy('id', 'desc')->get();
+        $kode_penerimaan = "PN" . date('dmY') . rand(0, 999);
         $data = array(
             'menu' => 'penerimaan',
             'submenu' => 'penerimaan',
             'penerimaan' => $penerimaan,
-            'pemesanan' => $pemesanan
+            'pemesanan' => $pemesanan,
+            'kode_penerimaan' => $kode_penerimaan,
         );
 
         return view('penerimaan/addpenerimaan', $data);

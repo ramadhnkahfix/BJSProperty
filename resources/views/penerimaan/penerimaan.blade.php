@@ -51,7 +51,7 @@
             <thead>
               <tr>
                 <th style="width: 10px">No</th>
-                <th>Kode Pemesanan</th>
+                <th>Kode penerimaan</th>
                 <th>Tanggal Penerimaan </th>
                 <th>Total Harga</th>
                 <th>Bukti Penerimaan</th>
@@ -63,7 +63,7 @@
               @foreach($penerimaan as $data)
               <tr>
                 <td>{{ $num++ }}</td>
-                <td>{{$data->kode_pemesanan}}</td>
+                <td>{{$data->kode_penerimaan}}</td>
                 <td>{{date('d F Y', strtotime($data->tgl_penerimaan))}}</td>
                 <td>{{$data->total_harga}}</td>
                 <td align="center">

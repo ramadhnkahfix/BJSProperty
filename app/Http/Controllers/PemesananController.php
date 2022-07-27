@@ -221,4 +221,29 @@ class PemesananController extends Controller
         );
         return view('pemesanan/cetak-pemesanan-form', $data);
     }
+
+    public function cetakForm1()
+    {
+        $pemesanan = DB::table('pemesanan')->get();
+        $data = array(
+            'menu' => 'pemesanan',
+            'submenu' => 'pemesanan',
+            'pemesanan' => $pemesanan,
+        );
+        return view('pemesanan/cetak-pemesanan-form', $data);
+    }
+
+    public function cetakPemesananPertanggal($tglawal, $tglakhir)
+    {
+        // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
+        $cetakpertanggal = DB::table('pemesanan')->whereBetween('tgl_pemesanan', [$tglawal, $tglakhir])->get();
+        return view('pemesanan/cetak-pemesanan-pertanggal', compact('cetakpertanggal'));
+    }
+
+    public function export_excel($tglawal, $tglakhir)
+    {
+        $exportexcel = DB::table('pemesanan')->whereBetween('tgl_pemesanan', [$tglawal, $tglakhir])->get();
+        return view('pemesanan/export-excel', compact('exportexcel'));
+    }
+
 }

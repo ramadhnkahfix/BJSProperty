@@ -35,6 +35,10 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
+                            <label>Kode Penerimaan</label>
+                            <input type="text" class="form-control form-control-border" name="kode_penerimaan" value="{{$kode_penerimaan}}" readonly>
+                        </div>
+                        <div class="form-group">
                             <label>Tanggal Penerimaan</label>
                             <input type="text" name="tgl_penerimaan" style="background-color:transparent;" class="form-control form-control-border" value="{{date('D-d-M-Y')}}" readonly>
                         </div>

@@ -56,8 +56,8 @@
                   @foreach($pembayaran as $data)     
                       <tr> 
                         <td>{{ $num++ }}</td>
-                        <td>{{$data->id_penerimaan}}</td>
                         <td>{{$data->tgl_pembayaran}}</td> 
+                        <td>{{$data->penerimaan_id}}</td>                       
                          <td>{{$data->total_pembayaran}}</td>
                          <td align="center">
                           <a href="{{ url('bukti_pembayaran/'.$data->bukti_pembayaran) }}"><button class="
