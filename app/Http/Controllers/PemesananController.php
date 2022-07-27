@@ -211,17 +211,20 @@ class PemesananController extends Controller
 
     public function cetakForm()
     {
-        $pemesanan = Pemesanan::select('pemesanan.*', 'suplier.nama_suplier','suplier.alamat_suplier')
-        ->join('suplier', 'suplier.id_suplier', '=', 'pemesanan.supplier_id')
-        ->where('status', 1)->get();
-        $detail_pemesanan = DetailPemesanan::select('detail_pemesanans.*', 'barang.nama_barang', 'barang.jml_barang')->join('barang', 'barang.id_barang', '=', 'detail_pemesanans.barang_id')
-            ->where('pemesanan_id', $pemesanan->id)->where('deleted_at', null)->get();
+        $pemesanan = Pemesanan::where('status','!=','0')->get();
         $data = array(
             'menu' => 'pemesanan',
             'submenu' => 'pemesanan',
             'pemesanan' => $pemesanan,
-            'detail_pemesanan' => $detail_pemesanan
+
         );
         return view('pemesanan/cetak-pemesanan-form', $data);
+    }
+
+    public function cetakPemesananPertanggal($tglawal, $tglakhir)
+    {
+        // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
+        $cetakpertanggal = Pemesanan::where('status','1')->whereBetween('tgl_pemesanan', [$tglawal, $tglakhir])->get();
+        return view('pemesanan/cetak-pemesanan-pertanggal', compact('cetakpertanggal'));
     }
 }

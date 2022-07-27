@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth', 'checkRole:pemilik']], function () {
     Route::patch('/pemesanan/delete/{id}', [PemesananController::class, 'delete']);
     Route::get('/pemesanan/hapus/{id_pemesanan}', [PemesananController::class, 'hapus']);
     Route::get('/pemesanan/cetak-pemesanan-form', [PemesananController::class, 'cetakForm']);
+    Route::get('/pemesanan/cetakPemesananPertanggal/{tglawal}/{tglakhir}', [PemesananController::class, 'cetakPemesananPertanggal']);
 
     Route::get('/penerimaan', [PenerimaanController::class, 'index']);
     Route::get('/penerimaan/addpenerimaan', [PenerimaanController::class, 'insertPenerimaan']);

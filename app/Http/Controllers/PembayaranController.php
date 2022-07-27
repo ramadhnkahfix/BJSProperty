@@ -31,7 +31,7 @@ class PembayaranController extends Controller
     public function insertPembayaran()
     {
         $pembayaran = DB::table('pembayaran')->get();
-        $penerimaan = DB::table('penerimaan')->where('is_pay', 0)->get();
+        $penerimaan = DB::table('penerimaan')->where('status','1')->where('is_pay', 0)->get();
         $data = array(
             'menu' => 'pembayaran',
             'submenu' => 'pembayaran',
@@ -79,9 +79,9 @@ class PembayaranController extends Controller
             'bukti_pembayaran' => $fileName,
             'status_pembayaran' => $post->status_pembayaran,
         ]);
-
+        $pembayaran = DB::table('pembayaran')->orderBy('id_pembayaran','desc')->first();
         if ($post->has('bayar')) {
-            DB::table('pembayaran')->orderBy('id_pembayaran', 'desc')->update([
+            DB::table('pembayaran')->where('id_pembayaran', $pembayaran->id_pembayaran)->update([
                 'hutang' => $post->total_pembayaran - $post->bayar
             ]);
         }
@@ -146,7 +146,7 @@ class PembayaranController extends Controller
     public function cetakPembayaranPertanggal($tglawal, $tglakhir)
     {
         // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
-        $cetakpertanggal = DB::table('pembayaran')->whereBetween('tgl_pembayaran', [$tglawal, $tglakhir])->get();
+        $cetakpertanggal = DB::table('pembayaran')->orderBy('status_pembayaran','desc')->whereBetween('tgl_pembayaran', [$tglawal, $tglakhir])->get();
         return view('pembayaran/cetak-pembayaran-pertanggal', compact('cetakpertanggal'));
     }
 }

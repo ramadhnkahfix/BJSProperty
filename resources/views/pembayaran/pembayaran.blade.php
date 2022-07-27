@@ -57,7 +57,7 @@
               <tr>
                 <td>{{ $num++ }}</td>
                 <td>{{$data->kode_penerimaan}}</td>
-                <td>{{$data->tgl_pembayaran}}</td>
+                <td>{{date('d F Y', strtotime($data->tgl_pembayaran))}}</td>
                 <td>{{$data->total_pembayaran}}</td>
                 <td align="center">
                   <a href="{{ url('bukti_pembayaran/'.$data->bukti_pembayaran) }}"><button class="
